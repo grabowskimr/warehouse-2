@@ -1,0 +1,1 @@
+export const host = 'http://localhost:3031/db.php?action=';

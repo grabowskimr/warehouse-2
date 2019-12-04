@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FormEvent, useState} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -8,6 +8,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+
+import { loginRequest } from '../actions/dbActions';
 
 const useStyles = makeStyles((theme: Theme) => ({
   content: {
@@ -32,6 +34,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Login: React.FC = () => {
   const classes = useStyles();
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+
+  const loginToApp = (event: FormEvent) : void => {
+    event.preventDefault();
+    console.log(login);
+    console.log(password);
+    let data: object = loginRequest({login, password});
+  };
+
 
   return (
     <div>
@@ -55,10 +67,10 @@ const Login: React.FC = () => {
             <Typography align="center" variant="h6">
               Insert credentials
             </Typography>
-            <form className={classes.form}>
-              <TextField label="Login" fullWidth margin="normal"/>
-              <TextField label="Password" type="password" fullWidth margin="normal"/>
-              <Button variant="contained" color="primary" className={classes.submitBtn}>Sign In</Button>
+            <form className={classes.form} onSubmit={loginToApp}>
+              <TextField label="Login" fullWidth margin="normal" value={login} onChange={(e) => setLogin(e.target.value)}/>
+              <TextField label="Password" type="password" fullWidth margin="normal" value={password} onChange={(e) => setPassword((e.target.value))}/>
+              <Button variant="contained" color="primary" type="submit" className={classes.submitBtn}>Sign In</Button>
             </form>
           </div>
         </Paper>
