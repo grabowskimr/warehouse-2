@@ -1,12 +1,44 @@
 import axios from 'axios';
 import {host} from '../config/config';
 
-const post: (action: string, data: object) => Promise<object> =  (action, data) => axios.post(`${host}${action}`, data);
-const get: (action: string, data: object) => Promise<object> = (action, data) => axios.post(`${host}${action}`, data);
+interface RequestData {
+  action: string,
+  [dataName: string]: any
+}
 
+interface ResponseObject {
+  data: object[],
+  [dataName: string]: any
+}
 
-export const loginRequest = async (data: object) : Promise<object> => {
-  let response = await post('login', {});
+const call: (type: string, data: RequestData, secure: boolean) => Promise<ResponseObject> = async (type, data, secure) : Promise<ResponseObject> => {
+  const call = type === 'post' ? axios.post : axios.get;
+  if(secure) {
+    let {data: status} = await axios.post(host,{
+      action: 'checkAccess'
+    });
+    if(status.status) {
+      return call(host, {
+        ...data
+      });
+    } else {
+      return status;
+    }
+  } else {
+    return call(host, {
+      ...data
+    });
+  }
+};
+
+export const sendData: (requestData: RequestData, secure?: boolean) => Promise<object> = async (requestData: RequestData, secure = true) : Promise<object> => {
+  let {data: response}: ResponseObject = await call('post', requestData, secure);
+  console.log(response);
+  return response;
+};
+
+export const getData: (requestData: RequestData, secure?: boolean) => Promise<object> = async (requestData: RequestData, secure = true) : Promise<object> => {
+  let {data: response}: ResponseObject = await call('post', requestData, secure);
   console.log(response);
   return response;
 };

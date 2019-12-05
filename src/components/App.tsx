@@ -1,11 +1,16 @@
 import React from 'react';
-import Login from "./Login";
+import { BrowserRouter } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
+import RouteComponent from './Route';
 
 const App: React.FC = () => {
-
   return (
     <div>
-      <Login />
+      <CookiesProvider>
+        <BrowserRouter>
+          <RouteComponent />
+        </BrowserRouter>
+      </CookiesProvider>
     </div>
   );
 };

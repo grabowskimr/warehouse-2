@@ -8,8 +8,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import { withCookies } from 'react-cookie';
 
-import { loginRequest } from '../actions/dbActions';
+import { sendData } from '../actions/dbActions';
 
 const useStyles = makeStyles((theme: Theme) => ({
   content: {
@@ -37,13 +38,11 @@ const Login: React.FC = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
-  const loginToApp = (event: FormEvent) : void => {
+  const loginToApp = async (event: FormEvent) => {
     event.preventDefault();
-    console.log(login);
-    console.log(password);
-    let data: object = loginRequest({login, password});
+    let data: object = await sendData({login, password, action: 'login'}, false);
+    console.log(data);
   };
-
 
   return (
     <div>
@@ -80,4 +79,4 @@ const Login: React.FC = () => {
 
 };
 
-export default Login;
+export default withCookies(Login);
