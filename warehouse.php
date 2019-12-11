@@ -1,5 +1,6 @@
 <?php
-header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 
 function sendMessage($message, $status, $data) {
 	$messageData = (object) [
@@ -19,19 +20,20 @@ function callDB($sql) {
     $conn = new mysqli($servername, $username, $password, $dbmane);
     $conn->set_charset("utf8");
 
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
     $result = $conn->query($sql);
 	$outLista = [];
 	while($row = mysqli_fetch_assoc($result)) {
 		array_push($outLista,$row);
 	}
-	sendMessage('Poprawny login', true, $outLista);
+
+	return $outLista;
 }
 
 $_POST = json_decode(file_get_contents('php://input'), true);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 if (isset($_POST["action"])) {
     $action = $_POST["action"];
@@ -43,6 +45,7 @@ if (isset($_POST["action"])) {
 
     if($action == "login") {
         $sql = "SELECT * FROM w_users WHERE login = '$data->login' AND password = '$data->password'";
-        callDB($sql);
+        $data = callDB($sql);
+        sendMessage('Zalogowano', true, $data);
     }
 }
