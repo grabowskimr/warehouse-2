@@ -9,8 +9,10 @@ import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { withCookies } from 'react-cookie';
+import {Md5} from 'ts-md5/dist/md5';
 
 import { sendData } from '../actions/dbActions';
+import { makeId } from '../utils/session';
 
 const useStyles = makeStyles((theme: Theme) => ({
   content: {
@@ -33,15 +35,22 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const Login: React.FC = () => {
+const Login: React.FC = (props : any) => {
   const classes = useStyles();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
   const loginToApp = async (event: FormEvent) => {
     event.preventDefault();
-    let data: object = await sendData({login, password, action: 'login'}, false);
-    console.log(data);
+    let sessionId = makeId(35);
+    let data = await sendData({login, password: Md5.hashStr(password), sessionId, action: 'login'}, false);
+    if(data.status) {
+      let user: LoginData = data.data[0];
+      let oneHour = new Date();
+      oneHour.setHours(oneHour.getHours() + 1);
+      props.cookies.set('login', {login: user.login, id: user.id, session_id: user.session_id, profile: user.profile}, { path: '/', expires: oneHour });
+      props.history.push('/app');
+    }
   };
 
   return (

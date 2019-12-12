@@ -1,7 +1,9 @@
 import React from 'react';
-import Login from "./Login";
 import { Route, Switch } from 'react-router-dom';
 import { withCookies } from 'react-cookie';
+
+import Login from './Login';
+import Main from './Main';
 
 const RouteComponent: React.FC = (props) => {
   console.log(props);
@@ -9,6 +11,7 @@ const RouteComponent: React.FC = (props) => {
   return (
     <Switch>
       <Route exact path='/' component={Login}/>
+      <Route exact path='/app' component={Main}/>
     </Switch>
   );
 };

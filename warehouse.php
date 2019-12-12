@@ -40,12 +40,33 @@ if (isset($_POST["action"])) {
     $data = (object) $_POST;
 
     if($action == 'checkAccess') {
-       sendMessage('Security issue', false);
+        $sql = "SELECT * FROM w_sessions WHERE user_id = $data->id AND session_id = '$data->sessionId'";
+        $sessionData = (object) callDB($sql)[0];
+        if($sessionData->id) {
+            sendMessage('Session ok', true, $sessionData);
+        } else {
+            sendMessage('Session not ok', false, $sessionData);
+        }
     }
 
     if($action == "login") {
         $sql = "SELECT * FROM w_users WHERE login = '$data->login' AND password = '$data->password'";
-        $data = callDB($sql);
-        sendMessage('Zalogowano', true, $data);
+        $userData = (object) callDB($sql)[0];
+
+        if($userData->id) {
+           $sql2 = "INSERT INTO w_sessions (session_id, user_id) VALUES ('$data->sessionId', $userData->id)";
+           $sessionData = (object) callDB($sql2)[0];
+           $loginToAppInfo = [(object) [
+                'login' => $userData->login,
+                'name' => $userData->name,
+                'id' => $userData->id,
+                'profile' => $userData->profile,
+                'email' => $userData->email,
+                'session_id' => $data->sessionId
+            ]];
+            sendMessage('Zalogowano', true, $loginToAppInfo);
+        } else {
+            sendMessage('Błąd', false, []);
+        }
     }
 }
