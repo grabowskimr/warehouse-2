@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,17 +7,11 @@ import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from '@material-ui/icons/Menu';
-import Drawer from "@material-ui/core/Drawer";
-import Divider from '@material-ui/core/Divider';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CssBaseline from "@material-ui/core/CssBaseline";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import DashboardIcon from '@material-ui/icons/Dashboard';
 
-const drawerWidth = 240;
+import SideBar from "./SideBar";
+import {drawerWidth} from '../config/config';
+import AppContext  from '../AppContext';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -25,13 +19,6 @@ const useStyles = makeStyles(theme => ({
     },
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -57,26 +44,6 @@ const useStyles = makeStyles(theme => ({
     title: {
         flexGrow: 1,
     },
-    drawerPaper: {
-        position: 'relative',
-        whiteSpace: 'nowrap',
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerPaperClose: {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9),
-        },
-    },
     appBarSpacer: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
@@ -100,20 +67,20 @@ const useStyles = makeStyles(theme => ({
 
 const Layout: React.FC = (props: any) => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-
+    const {state, dispatch} = useContext(AppContext);
     const handleDrawerOpen = () => {
-        setOpen(true);
+        dispatch({
+            type: 'SET_DRAWER_OPEN',
+            payload: {
+                drawerOpened: true
+            }
+        })
     };
 
     return (
         <div className={classes.root}>
             <CssBaseline/>
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+            <AppBar position="absolute" className={clsx(classes.appBar, state.drawerOpened && classes.appBarShift)}>
                 <Toolbar>
                     <IconButton edge="start" className={classes.menuButton} onClick={handleDrawerOpen} color="inherit"
                                 aria-label="menu">
@@ -125,7 +92,7 @@ const Layout: React.FC = (props: any) => {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
-
+            <SideBar />
             <main className={classes.content}>
                 <div className={classes.appBarSpacer}/>
                 {props.children}

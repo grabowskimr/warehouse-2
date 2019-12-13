@@ -1,14 +1,11 @@
-import React, {Props, useState} from 'react';
+import React from 'react';
 import {RouteComponentProps} from 'react-router';
 
 import {checkAccess} from '../actions/dbActions';
 import Layout from './Layout';
+import ContextProvider from './ContextProvider';
 
 class Main extends React.Component<RouteComponentProps> {
-    constructor(props: any) {
-        super(props);
-    }
-
     componentDidMount(): void {
         checkAccess().then(status => {
             if (!status) {
@@ -19,9 +16,11 @@ class Main extends React.Component<RouteComponentProps> {
 
     render() {
         return (
-            <Layout>
-                hej
-            </Layout>
+            <ContextProvider>
+                <Layout>
+                    hej
+                </Layout>
+            </ContextProvider>
         )
     }
 }
