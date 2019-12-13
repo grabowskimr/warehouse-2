@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -99,62 +99,39 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Layout: React.FC = (props: any) => {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(true);
 
     const handleDrawerClose = () => {
-      setOpen(false);
+        setOpen(false);
     };
 
     const handleDrawerOpen = () => {
-      setOpen(true);
+        setOpen(true);
     };
 
-  return (
-    <div className={classes.root}>
-      <CssBaseline/>
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} onClick={handleDrawerOpen} color="inherit"
-                      aria-label="menu">
-            <MenuIcon/>
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Warestore
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-      <Drawer variant="permanent" classes={{
-        paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
-      }}>
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon/>
-          </IconButton>
+    return (
+        <div className={classes.root}>
+            <CssBaseline/>
+            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+                <Toolbar>
+                    <IconButton edge="start" className={classes.menuButton} onClick={handleDrawerOpen} color="inherit"
+                                aria-label="menu">
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography variant="h6" className={classes.title}>
+                        Warestore
+                    </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
+
+            <main className={classes.content}>
+                <div className={classes.appBarSpacer}/>
+                {props.children}
+            </main>
         </div>
-        <Divider/>
-        <List>
-          <ListItem button>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-        </List>
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-          {props.children}
-      </main>
-    </div>
-  );
+    );
 };
 
 export default Layout;
