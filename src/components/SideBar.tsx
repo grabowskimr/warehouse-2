@@ -6,13 +6,15 @@ import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import DashboardIcon from "@material-ui/icons/Dashboard";
 import ListItemText from "@material-ui/core/ListItemText";
 import Drawer from "@material-ui/core/Drawer";
 import { makeStyles } from '@material-ui/core/styles';
+import {Link} from 'react-router-dom';
 
 import {drawerWidth} from '../config/config';
 import {AppContext} from '../AppContext';
+import {TMenuItem} from '../types/types';
+import {appMainPath} from '../config/config';
 
 const useStyles = makeStyles(theme => ({
     drawerPaper: {
@@ -42,9 +44,13 @@ const useStyles = makeStyles(theme => ({
         padding: '0 8px',
         ...theme.mixins.toolbar,
     },
+    linkItem: {
+        textDecoration: 'none',
+        color: '#000'
+    }
 }));
 
-const SideBar: React.FC = () => {
+const SideBar = (props: {menuItems: TMenuItem[]}) => {
     const classes = useStyles();
 
     const { state, dispatch } = useContext(AppContext);
@@ -68,18 +74,19 @@ const SideBar: React.FC = () => {
             </div>
             <Divider/>
             <List>
-                <ListItem button>
-                    <ListItemIcon>
-                        <DashboardIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Dashboard" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <DashboardIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Dashboard" />
-                </ListItem>
+                {props.menuItems.map((item, index) => {
+                    const Icon = item.iconComponent;
+                    return (
+                        <Link key={index} to={`${appMainPath}${item.url}`} className={classes.linkItem}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <Icon />
+                                </ListItemIcon>
+                                <ListItemText primary={item.label} />
+                            </ListItem>
+                        </Link>
+                    )
+                })}
             </List>
         </Drawer>
     )

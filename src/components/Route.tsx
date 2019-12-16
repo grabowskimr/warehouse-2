@@ -5,13 +5,11 @@ import {withCookies} from 'react-cookie';
 import Login from './Login';
 import Main from './Main';
 
-const RouteComponent: React.FC = (props) => {
-    console.log(props);
-
+const RouteComponent: React.FC = () => {
     return (
         <Switch>
             <Route exact path='/' component={Login}/>
-            <Route exact path='/app' component={Main}/>
+            <Route path='/app' component={Main}/>
         </Switch>
     );
 };
