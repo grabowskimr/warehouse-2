@@ -1,28 +1,35 @@
-import React, {FormEvent} from 'react';
+import React, {ChangeEvent, FormEvent} from 'react';
 import Typography from '@material-ui/core/Typography';
 import Paper from '../containers/Paper';
 
 import ProductForm from "./ProductForm";
 
 class AddProductPage extends React.Component {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            product: {
-                name: '',
-                price: '',
-                quantity: 0,
-                picture: null
-            }
+    state = {
+        product: {
+            name: '',
+            index: '',
+            supplier: '',
+            quantity: 0,
+            quantityType: '',
+            price: '',
+            picture: null
         }
-    }
+    };
 
-    submitForm = (e: FormEvent<Element>) => {
+    submitForm = (e: FormEvent<HTMLFormElement>) => {
 
     };
 
-    onInputChange = (e: FormEvent<Element>) => {
-
+    onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        let name : string = e.target.name;
+        console.log(e.target.value);
+        this.setState({
+            product: {
+                ...this.state.product,
+                [name]: e.target.value
+            }
+        });
     };
 
     onFileChange = () => {
