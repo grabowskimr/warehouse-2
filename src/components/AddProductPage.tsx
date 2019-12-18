@@ -2,7 +2,9 @@ import React, { ChangeEvent, FormEvent } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Paper from '../containers/Paper';
 
-import ProductForm from "./ProductForm";
+import ProductForm from './ProductForm';
+import { TFileType, TSelect } from '../types/types';
+import { sendData } from '../actions/dbActions';
 
 class AddProductPage extends React.Component {
     state = {
@@ -12,13 +14,21 @@ class AddProductPage extends React.Component {
             supplier: '',
             quantity: 0,
             quantityType: '',
+            quantityAlert: 0,
             price: '',
             picture: null
-        }
+        },
+        file: null
     };
 
-    submitForm = (e: FormEvent<HTMLFormElement>) => {
-
+    submitForm = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        let data = await sendData({
+            ...this.state.product,
+            file: this.state.file,
+            action: 'addProduct'
+        });
+        console.log(data);
     };
 
     onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,8 +42,25 @@ class AddProductPage extends React.Component {
         });
     };
 
-    onFileChange = () => {
+    onSelectChange = (data: TSelect) => {
+        let name = data.name;
+        this.setState({
+            product: {
+                ...this.state.product,
+                [name]: data.value
+            }
+        })
+    };
 
+    onFileChange = (data: TFileType) => {
+        let name = data.inputName;
+        this.setState({
+            product: {
+                ...this.state.product,
+                [name]: data.fileName
+            },
+            file: data.file
+        })
     };
 
 
@@ -42,8 +69,11 @@ class AddProductPage extends React.Component {
             <div>
                 <Paper>
                     <Typography variant="h5">Add Product</Typography>
-                    <ProductForm onSubmit={this.submitForm} onInputChange={this.onInputChange}
-                                 onFileChange={this.onFileChange} product={this.state.product}/>
+                    <ProductForm onSubmit={this.submitForm}
+                                 onInputChange={this.onInputChange}
+                                 onFileChange={this.onFileChange}
+                                 onSelectChange={this.onSelectChange}
+                                 product={this.state.product}/>
                 </Paper>
             </div>
         )

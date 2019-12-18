@@ -18,7 +18,7 @@ class Main extends React.Component<RouteComponentProps> {
     ];
 
     componentDidMount(): void {
-        checkAccess().then(status => {
+        checkAccess().then(({status}) => {
             if (!status) {
                 this.props.history.push('/');
             }

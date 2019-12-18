@@ -18,21 +18,19 @@ export const checkAccess = async () => {
         id: cookie.id
     }, config);
 
-    return secure.data.status;
+    return secure.data;
 };
 
 const call: (type: string, data: RequestData, secure: boolean) => Promise<ResponseObject> = async (type, data, secure): Promise<ResponseObject> => {
     const call = type === 'post' ? axios.post : axios.get;
     if (secure) {
-        let {data: status} = await axios.post(host, {
-            action: 'checkAccess'
-        }, config);
-        if (status.status) {
+        let secureInfo = await checkAccess();
+        if (secureInfo.status) {
             return call(host, {
                 ...data
             }, config);
         } else {
-            return status;
+            return secureInfo;
         }
     } else {
         return call(host, {
@@ -42,14 +40,11 @@ const call: (type: string, data: RequestData, secure: boolean) => Promise<Respon
 };
 
 export const sendData: (requestData: RequestData, secure?: boolean) => Promise<ReturnedData> = async (requestData: RequestData, secure = true): Promise<ReturnedData> => {
-    console.log('asdasd');
     let {data: response}: ResponseObject = await call('post', requestData, secure);
-    console.log(response);
     return response;
 };
 
 export const getData: (requestData: RequestData, secure?: boolean) => Promise<ReturnedData> = async (requestData: RequestData, secure = true): Promise<ReturnedData> => {
     let {data: response}: ResponseObject = await call('get', requestData, secure);
-    console.log(response);
     return response;
 };

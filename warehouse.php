@@ -11,7 +11,7 @@ function sendMessage($message, $status, $data) {
 	return print_r(json_encode($messageData));
 }
 
-function callDB($sql) {
+function callDB($sql, $type) {
     $servername = "localhost";
     $username = "root";
     $password = "root";
@@ -24,13 +24,18 @@ function callDB($sql) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $result = $conn->query($sql);
-	$outLista = [];
-	while($row = mysqli_fetch_assoc($result)) {
-		array_push($outLista,$row);
-	}
+    if($type == 'INSERT') {
+        $result = $conn->query($sql);
+        return $result;
+    } else {
+        $result = $conn->query($sql);
+    	$outLista = [];
+    	while($row = mysqli_fetch_assoc($result)) {
+    		array_push($outLista,$row);
+    	}
+    	return $outLista;
+    }
 
-	return $outLista;
 }
 
 $_POST = json_decode(file_get_contents('php://input'), true);
@@ -41,7 +46,7 @@ if (isset($_POST["action"])) {
 
     if($action == 'checkAccess') {
         $sql = "SELECT * FROM w_sessions WHERE user_id = $data->id AND session_id = '$data->sessionId'";
-        $sessionData = (object) callDB($sql)[0];
+        $sessionData = (object) callDB($sql, '')[0];
         if($sessionData->id) {
             sendMessage('Session ok', true, $sessionData);
         } else {
@@ -51,11 +56,11 @@ if (isset($_POST["action"])) {
 
     if($action == "login") {
         $sql = "SELECT * FROM w_users WHERE login = '$data->login' AND password = '$data->password'";
-        $userData = (object) callDB($sql)[0];
+        $userData = (object) callDB($sql, '')[0];
 
         if($userData->id) {
            $sql2 = "INSERT INTO w_sessions (session_id, user_id) VALUES ('$data->sessionId', $userData->id)";
-           $sessionData = (object) callDB($sql2)[0];
+           $sessionData = (object) callDB($sql2, '')[0];
            $loginToAppInfo = [(object) [
                 'login' => $userData->login,
                 'name' => $userData->name,
@@ -69,4 +74,23 @@ if (isset($_POST["action"])) {
             sendMessage('Błąd', false, []);
         }
     }
+
+    if($action == 'addProduct') {
+        $sql = "INSERT INTO w_products(name, product_index, price, supplier, quantity, quantityType, quantityAlert, picture) VALUES ('$data->name', '$data->index', $data->price, '$data->supplier', $data->quantity, '$data->quantityType', '$data->quantityAlert', '$data->picture')";
+        $status = callDB($sql, 'INSERT');
+        if($status) {
+            $product = [(object) [
+                'name' => $data->name,
+                'status' => true
+            ]];
+            sendMessage('Dodano', true, $product);
+        } else {
+            $product = [(object) [
+                'name' => $data->name,
+                'status' => false
+            ]];
+            sendMessage('Błąd', false, $product);
+        }
+    }
+
 }

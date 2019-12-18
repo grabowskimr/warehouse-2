@@ -1,22 +1,36 @@
-import React, { FormEvent, useState } from 'react';
+import React, {useState } from 'react';
 import TextField from "@material-ui/core/TextField";
+import { TFileType } from "../types/types";
 
 type TFileInput = {
     label: string,
     name: string,
-    onChange: (value: string) => void
+    value: string | null,
+    onChange: (value: TFileType) => void
 }
 
 const FileInput = (props: TFileInput) => {
-    const [file, setFile] = useState();
+    const [fileName, setFileName] = useState(props.value ? props.value : '');
 
-    const onChange = (e: FormEvent<Element>) => {
-        console.log(e.target);
-        props.onChange('test');
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let file: File | null = e.target.files && e.target.files.length ? e.target.files[0] : null;
+        if(file) {
+            setFileName(file.name);
+        } else {
+            setFileName('');
+        }
+        props.onChange({
+            file: file,
+            fileName: file ? file.name : '',
+            inputName: props.name
+        });
     };
 
     return (
-        <TextField type="file" name={props.name} label={props.label} value={file} onChange={onChange}/>
+        <>
+            <TextField type="file" label={props.label} name={props.name} onChange={onChange} />
+            <TextField type="hidden" name={props.name} value={fileName} />
+        </>
     )
 };
 
