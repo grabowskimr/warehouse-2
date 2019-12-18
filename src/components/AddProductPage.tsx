@@ -5,8 +5,9 @@ import Paper from '../containers/Paper';
 import ProductForm from './ProductForm';
 import { TFileType, TSelect } from '../types/types';
 import { sendData } from '../actions/dbActions';
+import withContext from "../utils/withContext";
 
-class AddProductPage extends React.Component {
+class AddProductPage extends React.Component<any, any> {
     state = {
         product: {
             name: '',
@@ -28,12 +29,16 @@ class AddProductPage extends React.Component {
             file: this.state.file,
             action: 'addProduct'
         });
-        console.log(data);
+        this.props.dispatch({
+            type: 'SET_MESSAGE_VISIBLE',
+            payload: {
+                message: data.message
+            }
+        });
     };
 
     onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         let name: string = e.target.name;
-        console.log(e.target.value);
         this.setState({
             product: {
                 ...this.state.product,
@@ -63,7 +68,6 @@ class AddProductPage extends React.Component {
         })
     };
 
-
     render() {
         return (
             <div>
@@ -80,4 +84,4 @@ class AddProductPage extends React.Component {
     }
 }
 
-export default AddProductPage;
+export default withContext(AddProductPage);

@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { host } from '../config/config';
+import { host, upload } from '../config/config';
 import { getCookieValueByRegEx } from '../utils/session';
+
 
 const config = {
     headers: {
@@ -39,7 +40,26 @@ const call: (type: string, data: RequestData, secure: boolean) => Promise<Respon
     }
 };
 
+const uploadFile = async (file : File) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    };
+
+    const {data} = await axios.post(upload, formData, config);
+    return data;
+};
+
 export const sendData: (requestData: RequestData, secure?: boolean) => Promise<ReturnedData> = async (requestData: RequestData, secure = true): Promise<ReturnedData> => {
+    if(requestData.file) {
+        let {path, status} = await uploadFile(requestData.file);
+        if(status) {
+            requestData.picture = path;
+        }
+    }
     let {data: response}: ResponseObject = await call('post', requestData, secure);
     return response;
 };

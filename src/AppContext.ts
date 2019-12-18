@@ -1,13 +1,17 @@
 import React from "react";
 
 interface IApp {
-    drawerOpened: boolean
+    drawerOpened: boolean,
+    messageVisible: boolean,
+    message: string
 }
 
-type Action = { type: string; payload: object };
+type Action = { type: string; payload?: {[dataName: string]: any} };
 
 export const initialState: IApp = {
-    drawerOpened: true
+    drawerOpened: true,
+    messageVisible: false,
+    message: ''
 };
 
 export const reducer = (state: IApp = initialState, action: Action) => {
@@ -21,6 +25,17 @@ export const reducer = (state: IApp = initialState, action: Action) => {
             return {
                 ...state,
                 drawerOpened: false
+            };
+        case "SET_MESSAGE_VISIBLE":
+            return {
+                ...state,
+                messageVisible: true,
+                message: action.payload ? action.payload.message : ''
+            };
+        case "SET_MESSAGE_HIDE":
+            return {
+                ...state,
+                messageVisible: false
             };
         default:
             throw new Error();
@@ -36,5 +51,6 @@ export const AppContext = React.createContext<{
 });
 
 export const AppProvider = AppContext.Provider;
+export const AppConsumer = AppContext.Consumer;
 
 export default AppContext;

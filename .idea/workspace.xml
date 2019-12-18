@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d4fc2b72-aba5-4a68-b6fd-5edf2caa5ca0" name="Default Changelist" comment="Small refactor">
+    <list default="true" id="d4fc2b72-aba5-4a68-b6fd-5edf2caa5ca0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/Message.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/withContext.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppContext.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/dbActions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/dbActions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/AddProductPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddProductPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FileInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/FileInput.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProductForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/api.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/api.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/types.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/warehouse.php" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +43,7 @@
     <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/react-scripts" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
@@ -129,7 +128,8 @@
       <workItem from="1576591535863" duration="2893000" />
       <workItem from="1576600998505" duration="147000" />
       <workItem from="1576655494950" duration="1378000" />
-      <workItem from="1576656885623" duration="10385000" />
+      <workItem from="1576656885623" duration="10680000" />
+      <workItem from="1576703215707" duration="7363000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1574938902023</created>
@@ -194,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576656745498</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Add Product functionality">
+      <created>1576671005748</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1576671005748</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,7 +233,8 @@
     <MESSAGE value="Add Product page" />
     <MESSAGE value="Change input changes" />
     <MESSAGE value="Small refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small refactor" />
+    <MESSAGE value="Add Product functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Product functionality" />
   </component>
   <component name="WindowStateProjectService">
     <state x="496" y="224" key="#CSS" timestamp="1576243290162">
@@ -253,43 +261,43 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="634" y="313" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1576501535745" />
-    <state x="477" y="79" key="CommitChangelistDialog2" timestamp="1576670976827">
+    <state x="477" y="79" key="CommitChangelistDialog2" timestamp="1576671005576">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="477" y="79" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1576670976827" />
-    <state width="1771" height="154" key="GridCell.Tab.0.bottom" timestamp="1576670969331">
-      <screen x="0" y="0" width="1792" height="1120" />
+    <state x="477" y="79" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1576671005576" />
+    <state width="1771" height="154" key="GridCell.Tab.0.bottom" timestamp="1576675001712">
+      <screen x="0" y="23" width="1792" height="1039" />
     </state>
     <state width="1771" height="154" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1576670969331" />
-    <state width="1771" height="150" key="GridCell.Tab.0.bottom/0.23.1792.1039@0.23.1792.1039" timestamp="1576601246164" />
-    <state width="1771" height="154" key="GridCell.Tab.0.center" timestamp="1576670969330">
-      <screen x="0" y="0" width="1792" height="1120" />
+    <state width="1771" height="154" key="GridCell.Tab.0.bottom/0.23.1792.1039@0.23.1792.1039" timestamp="1576675001712" />
+    <state width="1771" height="154" key="GridCell.Tab.0.center" timestamp="1576675001711">
+      <screen x="0" y="23" width="1792" height="1039" />
     </state>
     <state width="1771" height="154" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1576670969330" />
-    <state width="1771" height="150" key="GridCell.Tab.0.center/0.23.1792.1039@0.23.1792.1039" timestamp="1576601246164" />
-    <state width="1771" height="154" key="GridCell.Tab.0.left" timestamp="1576670969329">
-      <screen x="0" y="0" width="1792" height="1120" />
+    <state width="1771" height="154" key="GridCell.Tab.0.center/0.23.1792.1039@0.23.1792.1039" timestamp="1576675001711" />
+    <state width="1771" height="154" key="GridCell.Tab.0.left" timestamp="1576675001710">
+      <screen x="0" y="23" width="1792" height="1039" />
     </state>
     <state width="1771" height="154" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1576670969329" />
-    <state width="1771" height="150" key="GridCell.Tab.0.left/0.23.1792.1039@0.23.1792.1039" timestamp="1576601246163" />
-    <state width="1771" height="154" key="GridCell.Tab.0.right" timestamp="1576670969330">
-      <screen x="0" y="0" width="1792" height="1120" />
+    <state width="1771" height="154" key="GridCell.Tab.0.left/0.23.1792.1039@0.23.1792.1039" timestamp="1576675001710" />
+    <state width="1771" height="154" key="GridCell.Tab.0.right" timestamp="1576675001711">
+      <screen x="0" y="23" width="1792" height="1039" />
     </state>
     <state width="1771" height="154" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1576670969330" />
-    <state width="1771" height="150" key="GridCell.Tab.0.right/0.23.1792.1039@0.23.1792.1039" timestamp="1576601246164" />
+    <state width="1771" height="154" key="GridCell.Tab.0.right/0.23.1792.1039@0.23.1792.1039" timestamp="1576675001711" />
     <state x="669" y="193" key="RollbackChangesDialog" timestamp="1576073559234">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="669" y="193" key="RollbackChangesDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1576073559234" />
-    <state x="450" y="185" key="SettingsEditor" timestamp="1576656874732">
+    <state x="450" y="185" key="SettingsEditor" timestamp="1576704352164">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="450" y="185" key="SettingsEditor/0.0.1792.1120@0.0.1792.1120" timestamp="1576656874732" />
+    <state x="450" y="185" key="SettingsEditor/0.0.1792.1120@0.0.1792.1120" timestamp="1576704352164" />
     <state x="397" y="191" key="SettingsEditor/0.23.1792.1039@0.23.1792.1039" timestamp="1576003800148" />
-    <state x="496" y="299" key="Vcs.Push.Dialog.v2" timestamp="1576656747105">
+    <state x="496" y="299" key="Vcs.Push.Dialog.v2" timestamp="1576671007829">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="496" y="299" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1576656747105" />
+    <state x="496" y="299" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1576671007829" />
     <state x="545" y="206" width="703" height="708" key="find.popup" timestamp="1576661973331">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>

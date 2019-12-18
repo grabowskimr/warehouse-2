@@ -10,6 +10,7 @@ import Layout from '../containers/Layout';
 import ContextProvider from './ContextProvider';
 import { TMenuItem } from '../types/types';
 import AddProductPage from "./AddProductPage";
+import Message from './Message';
 
 class Main extends React.Component<RouteComponentProps> {
     menuItems: TMenuItem[] = [
@@ -34,6 +35,7 @@ class Main extends React.Component<RouteComponentProps> {
                         <Route path={`${appMainPath}/add`} exact component={AddProductPage}/>
                     </Switch>
                 </Layout>
+                <Message />
             </ContextProvider>
         )
     }
