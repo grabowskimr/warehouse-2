@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {host} from '../config/config';
-import {getCookieValueByRegEx} from '../utils/session';
+import { host } from '../config/config';
+import { getCookieValueByRegEx } from '../utils/session';
 
 const config = {
     headers: {

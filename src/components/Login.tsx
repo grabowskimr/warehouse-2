@@ -1,18 +1,18 @@
-import React, {FormEvent, useState} from 'react';
+import React, { FormEvent, useState } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import {makeStyles, Theme} from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import {withCookies} from 'react-cookie';
-import {Md5} from 'ts-md5/dist/md5';
+import { withCookies } from 'react-cookie';
+import { Md5 } from 'ts-md5/dist/md5';
 
-import {sendData} from '../actions/dbActions';
-import {makeId} from '../utils/session';
+import { sendData } from '../actions/dbActions';
+import { makeId } from '../utils/session';
 
 const useStyles = makeStyles((theme: Theme) => ({
     content: {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Paper from "@material-ui/core/Paper";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const PaperContainer = (props: {children: React.ReactNode}) => {
+const PaperContainer = (props: { children: React.ReactNode }) => {
     const classes = useStyles();
     return (
         <Paper className={classes.root}>

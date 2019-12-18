@@ -1,4 +1,4 @@
-import React, {FormEvent, useState} from 'react';
+import React, { FormEvent, useState } from 'react';
 import TextField from "@material-ui/core/TextField";
 
 type TFileInput = {

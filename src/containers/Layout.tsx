@@ -1,10 +1,10 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import SideBar from "../components/SideBar";
 import TopBar from "../components/TopBar";
-import {TMenuItem} from '../types/types';
+import { TMenuItem } from '../types/types';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -37,13 +37,13 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Layout = (props: {children: React.ReactNode, menuItems: TMenuItem[]}) => {
+const Layout = (props: { children: React.ReactNode, menuItems: TMenuItem[] }) => {
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
             <CssBaseline/>
-            <TopBar />
+            <TopBar/>
             <SideBar menuItems={props.menuItems}/>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer}/>

@@ -2,13 +2,13 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-import Grid  from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-import {TProduct} from '../types/types';
+import { TProduct } from '../types/types';
 import FileInput from "./FileInput";
 
 const useStyles = makeStyles(theme => ({

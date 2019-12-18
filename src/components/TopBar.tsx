@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import clsx from "clsx";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -6,11 +6,11 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
-import {makeStyles} from "@material-ui/core/styles";
-import {RouteComponentProps} from 'react-router';
+import { makeStyles } from "@material-ui/core/styles";
+import { RouteComponentProps } from 'react-router';
 
-import {drawerWidth} from "../config/config";
-import AppContext  from '../AppContext';
+import { drawerWidth } from "../config/config";
+import AppContext from '../AppContext';
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const TopBar : React.FC = (props: RouteComponentProps & any) => {
+const TopBar: React.FC = (props: RouteComponentProps & any) => {
     const classes = useStyles();
     const {state, dispatch} = useContext(AppContext);
     const handleDrawerOpen = () => {
@@ -59,7 +59,8 @@ const TopBar : React.FC = (props: RouteComponentProps & any) => {
     return (
         <AppBar position="absolute" className={clsx(classes.appBar, state.drawerOpened && classes.appBarShift)}>
             <Toolbar>
-                <IconButton edge="start" className={classes.menuButton} onClick={handleDrawerOpen} color="inherit" aria-label="menu">
+                <IconButton edge="start" className={classes.menuButton} onClick={handleDrawerOpen} color="inherit"
+                            aria-label="menu">
                     <MenuIcon/>
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent} from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Paper from '../containers/Paper';
 
@@ -22,7 +22,7 @@ class AddProductPage extends React.Component {
     };
 
     onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        let name : string = e.target.name;
+        let name: string = e.target.name;
         console.log(e.target.value);
         this.setState({
             product: {
@@ -42,7 +42,8 @@ class AddProductPage extends React.Component {
             <div>
                 <Paper>
                     <Typography variant="h5">Add Product</Typography>
-                    <ProductForm onSubmit={this.submitForm} onInputChange={this.onInputChange} onFileChange={this.onFileChange} product={this.state.product}/>
+                    <ProductForm onSubmit={this.submitForm} onInputChange={this.onInputChange}
+                                 onFileChange={this.onFileChange} product={this.state.product}/>
                 </Paper>
             </div>
         )

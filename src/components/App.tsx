@@ -1,6 +1,6 @@
 import React from 'react';
-import {BrowserRouter} from 'react-router-dom';
-import {CookiesProvider} from 'react-cookie';
+import { BrowserRouter } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 import RouteComponent from './Route';
 
 require("../types/api.d.ts");

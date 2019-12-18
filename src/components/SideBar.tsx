@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import clsx from "clsx";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -9,12 +9,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Drawer from "@material-ui/core/Drawer";
 import { makeStyles } from '@material-ui/core/styles';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import {drawerWidth} from '../config/config';
-import {AppContext} from '../AppContext';
-import {TMenuItem} from '../types/types';
-import {appMainPath} from '../config/config';
+import { appMainPath, drawerWidth } from '../config/config';
+import { AppContext } from '../AppContext';
+import { TMenuItem } from '../types/types';
 
 const useStyles = makeStyles(theme => ({
     drawerPaper: {
