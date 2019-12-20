@@ -6,12 +6,12 @@ import Login from './Login';
 import Main from './Main';
 
 const RouteComponent: React.FC = () => {
-    return (
-        <Switch>
-            <Route exact path='/' component={Login}/>
-            <Route path='/app' component={Main}/>
-        </Switch>
-    );
+	return (
+		<Switch>
+			<Route exact path="/" component={Login} />
+			<Route path="/app" component={Main} />
+		</Switch>
+	);
 };
 
 export default withCookies(RouteComponent);
