@@ -49,7 +49,11 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const SideBar = (props: { menuItems: TMenuItem[] }) => {
+type Props = {
+	menuItems: TMenuItem[];
+};
+
+const SideBar: React.FC<Props> = props => {
 	const classes = useStyles();
 
 	const { state, dispatch } = useContext(AppContext);

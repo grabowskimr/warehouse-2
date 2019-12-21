@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const PaperContainer = (props: { children: React.ReactNode }) => {
+const PaperContainer: React.FC = props => {
 	const classes = useStyles();
 	return <Paper className={classes.root}>{props.children}</Paper>;
 };

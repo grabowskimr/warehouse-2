@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles } from '@material-ui/core/styles';
-import { RouteComponentProps } from 'react-router';
 
 import { drawerWidth } from '../config/config';
 import AppContext from '../AppContext';
@@ -39,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const TopBar: React.FC = (props: RouteComponentProps & any) => {
+const TopBar: React.FC = props => {
 	const classes = useStyles();
 	const { state, dispatch } = useContext(AppContext);
 	const handleDrawerOpen = () => {

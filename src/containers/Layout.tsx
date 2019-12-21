@@ -37,7 +37,11 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const Layout = (props: { children: React.ReactNode; menuItems: TMenuItem[] }) => {
+type Props = {
+	menuItems: TMenuItem[];
+};
+
+const Layout: React.FC<Props> = props => {
 	const classes = useStyles();
 
 	return (

@@ -10,6 +10,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withCookies } from 'react-cookie';
 import { Md5 } from 'ts-md5/dist/md5';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { sendData } from '../actions/dbActions';
 import { makeId } from '../utils/session';
@@ -35,7 +36,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 	}
 }));
 
-const Login: React.FC = (props: any) => {
+type Props = { cookies: any } & RouteComponentProps;
+
+const Login: React.FC<Props> = props => {
 	const classes = useStyles();
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
