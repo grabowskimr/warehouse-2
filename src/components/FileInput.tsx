@@ -12,7 +12,7 @@ type TFileInput = {
 const FileInput: React.FC<TFileInput> = props => {
 	const [fileName, setFileName] = useState(props.value ? props.value : '');
 
-	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		let file: File | null = e.target.files && e.target.files.length ? e.target.files[0] : null;
 		if (file) {
 			setFileName(file.name);

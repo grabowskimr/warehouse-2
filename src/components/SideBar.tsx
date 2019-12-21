@@ -58,7 +58,7 @@ const SideBar: React.FC<Props> = props => {
 
 	const { state, dispatch } = useContext(AppContext);
 
-	const handleDrawerClose = () => {
+	const handleDrawerClose = (): void => {
 		dispatch({
 			type: 'SET_DRAWER_CLOSED',
 			payload: {

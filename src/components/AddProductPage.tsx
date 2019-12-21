@@ -22,7 +22,7 @@ class AddProductPage extends React.Component<any, any> {
 		file: null
 	};
 
-	submitForm = async (e: FormEvent<HTMLFormElement>) => {
+	submitForm = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
 		let data = await sendData({
 			...this.state.product,
@@ -37,7 +37,7 @@ class AddProductPage extends React.Component<any, any> {
 		});
 	};
 
-	onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+	onInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		let name: string = e.target.name;
 		this.setState({
 			product: {
@@ -47,7 +47,7 @@ class AddProductPage extends React.Component<any, any> {
 		});
 	};
 
-	onSelectChange = (data: TSelect) => {
+	onSelectChange = (data: TSelect): void => {
 		let name = data.name;
 		this.setState({
 			product: {
@@ -57,7 +57,7 @@ class AddProductPage extends React.Component<any, any> {
 		});
 	};
 
-	onFileChange = (data: TFileType) => {
+	onFileChange = (data: TFileType): void => {
 		let name = data.inputName;
 		this.setState({
 			product: {

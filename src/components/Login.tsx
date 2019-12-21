@@ -43,7 +43,7 @@ const Login: React.FC<Props> = props => {
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
 
-	const loginToApp = async (event: FormEvent) => {
+	const loginToApp = async (event: FormEvent): Promise<void> => {
 		event.preventDefault();
 		let sessionId = makeId(35);
 		let data = await sendData({ login, password: Md5.hashStr(password), sessionId, action: 'login' }, false);

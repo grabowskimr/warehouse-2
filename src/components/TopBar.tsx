@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 const TopBar: React.FC = props => {
 	const classes = useStyles();
 	const { state, dispatch } = useContext(AppContext);
-	const handleDrawerOpen = () => {
+	const handleDrawerOpen = (): void => {
 		dispatch({
 			type: 'SET_DRAWER_OPEN',
 			payload: {

@@ -16,7 +16,7 @@ const Message: React.FC = () => {
 	const classes = useStyles();
 	const { state, dispatch } = useContext(AppContext);
 
-	const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+	const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) : void => {
 		if (reason === 'clickaway') {
 			return;
 		}

@@ -28,7 +28,7 @@ type TProductForm = {
 const ProductForm: React.FC<TProductForm> = (props) => {
 	const classes = useStyles();
 
-	const handleSelectChange = (e: any) => {
+	const handleSelectChange = (e: any): void => {
 		props.onSelectChange({
 			name: e.target.name,
 			value: e.target.value
