@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const TopBar: React.FC = props => {
+const TopBar: React.FC = (props): JSX.Element => {
 	const classes = useStyles();
 	const { state, dispatch } = useContext(AppContext);
 	const handleDrawerOpen = (): void => {

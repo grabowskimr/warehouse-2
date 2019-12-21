@@ -5,7 +5,7 @@ import RouteComponent from './Route';
 
 require('../types/api.d.ts');
 
-const App: React.FC = () => {
+const App: React.FC = (): JSX.Element => {
 	return (
 		<div>
 			<CookiesProvider>

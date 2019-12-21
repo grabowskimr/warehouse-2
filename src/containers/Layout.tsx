@@ -41,7 +41,7 @@ type Props = {
 	menuItems: TMenuItem[];
 };
 
-const Layout: React.FC<Props> = props => {
+const Layout: React.FC<Props> = (props): JSX.Element => {
 	const classes = useStyles();
 
 	return (

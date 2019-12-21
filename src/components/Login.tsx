@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type Props = { cookies: any } & RouteComponentProps;
 
-const Login: React.FC<Props> = props => {
+const Login: React.FC<Props> = (props)L  => {
 	const classes = useStyles();
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');

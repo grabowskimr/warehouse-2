@@ -12,11 +12,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 	}
 }));
 
-const Message: React.FC = () => {
+const Message: React.FC = (): JSX.Element => {
 	const classes = useStyles();
 	const { state, dispatch } = useContext(AppContext);
 
-	const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) : void => {
+	const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string): void => {
 		if (reason === 'clickaway') {
 			return;
 		}

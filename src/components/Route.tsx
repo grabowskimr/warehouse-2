@@ -5,7 +5,7 @@ import { withCookies } from 'react-cookie';
 import Login from './Login';
 import Main from './Main';
 
-const RouteComponent: React.FC = () => {
+const RouteComponent: React.FC = (): JSX.Element => {
 	return (
 		<Switch>
 			<Route exact path="/" component={Login} />

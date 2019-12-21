@@ -53,7 +53,7 @@ type Props = {
 	menuItems: TMenuItem[];
 };
 
-const SideBar: React.FC<Props> = props => {
+const SideBar: React.FC<Props> = (props): JSX.Element => {
 	const classes = useStyles();
 
 	const { state, dispatch } = useContext(AppContext);
