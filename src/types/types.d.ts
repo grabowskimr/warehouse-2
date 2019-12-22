@@ -5,6 +5,7 @@ export type TMenuItem = {
 };
 
 export type TProduct = {
+	id?: string | number;
 	name: string;
 	index: string;
 	supplier: string;

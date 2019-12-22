@@ -93,4 +93,23 @@ if (isset($_POST["action"])) {
         }
     }
 
+
+}
+
+if (isset($_GET["action"])) {
+    $action = $_GET["action"];
+    $data = (object) $_GET;
+
+    if($action == 'getProducts') {
+        $sql = "SELECT * FROM w_products";
+        $products = callDB($sql, '');
+        sendMessage('Produkty', true, $products);
+    }
+
+    if($action == 'getProduct') {
+        $sql = "SELECT * FROM w_products WHERE id = $data->id";
+        $product = callDB($sql, '');
+        sendMessage('Product', true, $product);
+    }
+
 }

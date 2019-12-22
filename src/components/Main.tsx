@@ -11,6 +11,8 @@ import ContextProvider from './ContextProvider';
 import { TMenuItem } from '../types/types';
 import AddProductPage from './AddProductPage';
 import Message from './Message';
+import ProductList from './ProductList';
+import Product from './Product';
 
 class Main extends React.Component<RouteComponentProps> {
 	menuItems: TMenuItem[] = [
@@ -31,6 +33,8 @@ class Main extends React.Component<RouteComponentProps> {
 			<ContextProvider>
 				<Layout menuItems={this.menuItems}>
 					<Switch>
+						<Route exact path={appMainPath} component={ProductList} />
+						<Route exact path={`${appMainPath}/product/:id`} component={Product} />
 						<Route path={`${appMainPath}/add`} exact component={AddProductPage} />
 					</Switch>
 				</Layout>

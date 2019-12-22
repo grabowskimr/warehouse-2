@@ -29,13 +29,25 @@ const call: (type: string, data: RequestData, secure: boolean) => Promise<Respon
 	if (secure) {
 		let secureInfo = await checkAccess();
 		if (secureInfo.status) {
-			return call(
-				host,
-				{
-					...data
-				},
-				config
-			);
+			if (type === 'post') {
+				return call(
+					host,
+					{
+						...data
+					},
+					config
+				);
+			} else {
+				return call(
+					host,
+					{
+						params: {
+							...data
+						}
+					},
+					config
+				);
+			}
 		} else {
 			return secureInfo;
 		}
