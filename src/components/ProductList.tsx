@@ -53,7 +53,7 @@ const ProductList: React.FC<Props> = (props): JSX.Element => {
 							{products.map(product => (
 								<TableRow hover key={product.id} data-id={product.id} onClick={redirectToEditPage}>
 									<TableCell>{product.id}</TableCell>
-									<TableCell>{product.index}</TableCell>
+									<TableCell>{product.product_index}</TableCell>
 									<TableCell>{product.name}</TableCell>
 									<TableCell>
 										{product.quantity} {product.quantityType}

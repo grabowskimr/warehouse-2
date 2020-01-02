@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { host, upload } from '../config/config';
+import { api, upload } from '../config/config';
 import { getCookieValueByRegEx } from '../utils/session';
 
 const config = {
@@ -12,7 +12,7 @@ const config = {
 export const checkAccess = async () => {
 	let cookie: any = getCookieValueByRegEx('login');
 	let secure = await axios.post(
-		host,
+		api,
 		{
 			action: 'checkAccess',
 			sessionId: cookie.session_id,
@@ -31,7 +31,7 @@ const call: (type: string, data: RequestData, secure: boolean) => Promise<Respon
 		if (secureInfo.status) {
 			if (type === 'post') {
 				return call(
-					host,
+					api,
 					{
 						...data
 					},
@@ -39,7 +39,7 @@ const call: (type: string, data: RequestData, secure: boolean) => Promise<Respon
 				);
 			} else {
 				return call(
-					host,
+					api,
 					{
 						params: {
 							...data
@@ -53,7 +53,7 @@ const call: (type: string, data: RequestData, secure: boolean) => Promise<Respon
 		}
 	} else {
 		return call(
-			host,
+			api,
 			{
 				...data
 			},

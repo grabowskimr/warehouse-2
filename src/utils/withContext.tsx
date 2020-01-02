@@ -1,7 +1,8 @@
 import React from 'react';
 import { AppConsumer } from '../AppContext';
+import { TContext } from '../AppContext';
 
-const withContext = (Component: React.ComponentClass) => {
+const withContext = (Component: React.ComponentClass | React.FC<TContext>) => {
 	return (props: any) => {
 		return (
 			<AppConsumer>

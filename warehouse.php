@@ -76,7 +76,7 @@ if (isset($_POST["action"])) {
     }
 
     if($action == 'addProduct') {
-        $sql = "INSERT INTO w_products(name, product_index, price, supplier, quantity, quantityType, quantityAlert, picture) VALUES ('$data->name', '$data->index', $data->price, '$data->supplier', $data->quantity, '$data->quantityType', '$data->quantityAlert', '$data->picture')";
+        $sql = "INSERT INTO w_products(name, product_index, price, supplier, quantity, quantityType, quantityAlert, picture) VALUES ('$data->name', '$data->product_index', $data->price, '$data->supplier', $data->quantity, '$data->quantityType', '$data->quantityAlert', '$data->picture')";
         $status = callDB($sql, 'INSERT');
         if($status) {
             $product = [(object) [

@@ -50,6 +50,11 @@ export const AppContext = React.createContext<{
 	dispatch: () => {}
 });
 
+export type TContext = {
+	contextState: typeof initialState;
+	dispatch: (action: Action) => void;
+};
+
 export const AppProvider = AppContext.Provider;
 export const AppConsumer = AppContext.Consumer;
 

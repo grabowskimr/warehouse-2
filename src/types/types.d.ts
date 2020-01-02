@@ -7,7 +7,7 @@ export type TMenuItem = {
 export type TProduct = {
 	id?: string | number;
 	name: string;
-	index: string;
+	product_index: string;
 	supplier: string;
 	quantity: number;
 	quantityType: string;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
@@ -6,79 +6,103 @@ import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { TFileType, TProduct, TSelect } from '../types/types';
+import { TFileType, TProduct } from '../types/types';
 import FileInput from './FileInput';
 
-const useStyles = makeStyles(theme => ({
-	topSpace: {
-		marginTop: theme.spacing(2)
-	}
-}));
-
-type TProductForm = {
-	onSubmit: React.FormEventHandler<HTMLFormElement>;
+type TProductState = {
 	product: TProduct;
-	onInputChange: React.FormEventHandler;
-	onFileChange: (data: TFileType) => void;
-	onSelectChange: (data: TSelect) => void;
+	file: File | null;
 };
 
-const ProductForm: React.FC<TProductForm> = (props): JSX.Element => {
-	const classes = useStyles();
+type TProductForm = {
+	onSubmit: (event: FormEvent<HTMLFormElement>, product: TProductState) => void;
+	product: TProductState;
+};
 
-	const handleSelectChange = (e: any): void => {
-		props.onSelectChange({
-			name: e.target.name,
-			value: e.target.value
+class ProductForm extends React.Component<TProductForm, TProductState> {
+	constructor(props: TProductForm) {
+		super(props);
+		this.state = this.props.product;
+	}
+
+	onInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+		let name: string = e.target.name;
+		this.setState({
+			product: {
+				...this.state.product,
+				[name]: e.target.value
+			}
 		});
 	};
 
-	return (
-		<form onSubmit={props.onSubmit}>
-			<FormControl fullWidth className={classes.topSpace}>
-				<TextField name="name" label="Name" value={props.product.name} onChange={props.onInputChange} required />
-			</FormControl>
-			<FormControl fullWidth className={classes.topSpace}>
-				<TextField name="index" label="Index" value={props.product.index} onChange={props.onInputChange} required />
-			</FormControl>
-			<FormControl fullWidth className={classes.topSpace}>
-				<TextField name="supplier" label="Supplier" value={props.product.supplier} onChange={props.onInputChange} required />
-			</FormControl>
-			<FormControl fullWidth className={classes.topSpace}>
-				<TextField name="price" label="Price" value={props.product.price} onChange={props.onInputChange} required />
-			</FormControl>
-			<Grid container spacing={2} className={classes.topSpace}>
-				<Grid item xs={10}>
-					<FormControl fullWidth>
-						<TextField name="quantity" label="Quantity" value={props.product.quantity} onChange={props.onInputChange} required />
-					</FormControl>
+	onSelectChange = (e: any): void => {
+		let name = e.target.name;
+		this.setState({
+			product: {
+				...this.state.product,
+				[name]: e.target.value
+			}
+		});
+	};
+
+	onFileChange = (data: TFileType): void => {
+		let name = data.inputName;
+		this.setState({
+			product: {
+				...this.state.product,
+				[name]: data.fileName
+			},
+			file: data.file
+		});
+	};
+
+	render() {
+		return (
+			<form onSubmit={e => this.props.onSubmit(e, this.state)}>
+				<FormControl fullWidth>
+					<TextField name="name" label="Name" value={this.state.product.name} onChange={this.onInputChange} required />
+				</FormControl>
+				<FormControl fullWidth>
+					<TextField name="product_index" label="Index" value={this.state.product.product_index} onChange={this.onInputChange} required />
+				</FormControl>
+				<FormControl fullWidth>
+					<TextField name="supplier" label="Supplier" value={this.state.product.supplier} onChange={this.onInputChange} required />
+				</FormControl>
+				<FormControl fullWidth>
+					<TextField name="price" label="Price" value={this.state.product.price} onChange={this.onInputChange} required />
+				</FormControl>
+				<Grid container spacing={2}>
+					<Grid item xs={10}>
+						<FormControl fullWidth>
+							<TextField name="quantity" label="Quantity" value={this.state.product.quantity} onChange={this.onInputChange} required />
+						</FormControl>
+					</Grid>
+					<Grid item xs={2}>
+						<FormControl fullWidth>
+							<InputLabel id="quantity-type">Type</InputLabel>
+							<Select labelId="quantity-type" value={this.state.product.quantityType} name="quantityType" onChange={this.onSelectChange} required>
+								<MenuItem value="kg">Kg</MenuItem>
+								<MenuItem value="liter">Liter</MenuItem>
+								<MenuItem value="pieces">Pieces</MenuItem>
+							</Select>
+						</FormControl>
+					</Grid>
 				</Grid>
-				<Grid item xs={2}>
-					<FormControl fullWidth>
-						<InputLabel id="quantity-type">Type</InputLabel>
-						<Select labelId="quantity-type" value={props.product.quantityType} name="quantityType" onChange={handleSelectChange} required>
-							<MenuItem value="kg">Kg</MenuItem>
-							<MenuItem value="liter">Liter</MenuItem>
-							<MenuItem value="pieces">Pieces</MenuItem>
-						</Select>
-					</FormControl>
+				<FormControl fullWidth>
+					<TextField name="quantityAlert" label="Alert" type="number" value={this.state.product.quantityAlert} onChange={this.onInputChange} required />
+				</FormControl>
+				<FormControl fullWidth>
+					<FileInput label="Picture" name="picture" value={this.state.product.picture} onChange={this.onFileChange} />
+				</FormControl>
+				<Grid container direction="row" justify="flex-end" alignItems="center">
+					<Button type="submit" color="primary" variant="contained">
+						Submit
+					</Button>
 				</Grid>
-			</Grid>
-			<FormControl fullWidth className={classes.topSpace}>
-				<TextField name="quantityAlert" label="Alert" type="number" value={props.product.quantityAlert} onChange={props.onInputChange} required />
-			</FormControl>
-			<FormControl fullWidth className={classes.topSpace}>
-				<FileInput label="Picture" name="picture" value={props.product.picture} onChange={props.onFileChange} />
-			</FormControl>
-			<Grid container direction="row" justify="flex-end" alignItems="center" className={classes.topSpace}>
-				<Button type="submit" color="primary" variant="contained">
-					Submit
-				</Button>
-			</Grid>
-		</form>
-	);
-};
+			</form>
+		);
+	}
+}
 
 export default ProductForm;
