@@ -1,33 +1,17 @@
-import React, { FormEvent } from 'react';
-import Typography from '@material-ui/core/Typography';
-import Paper from '../containers/Paper';
+import React, { FormEvent, useContext } from 'react';
 
 import ProductForm from './ProductForm';
 import { sendData } from '../actions/dbActions';
-import withContext from '../utils/withContext';
 import { TProduct } from '../types/types';
-import { TContext } from '../AppContext';
+import AppContext from '../AppContext';
 
 type TProductForm = {
 	product: TProduct;
 	file: File | null;
 };
 
-const AddProductPage: React.FC<TContext> = (props): JSX.Element => {
-	const product = {
-		product: {
-			name: '',
-			product_index: '',
-			supplier: '',
-			quantity: 0,
-			quantityType: '',
-			quantityAlert: 0,
-			price: '',
-			picture: null
-		},
-		file: null
-	};
-
+const AddProductPage: React.FC = (props): JSX.Element => {
+	const { dispatch } = useContext(AppContext);
 	const submitForm = async (event: FormEvent<HTMLFormElement>, product: TProductForm): Promise<void> => {
 		event.preventDefault();
 		let data = await sendData({
@@ -35,7 +19,7 @@ const AddProductPage: React.FC<TContext> = (props): JSX.Element => {
 			file: product.file,
 			action: 'addProduct'
 		});
-		props.dispatch({
+		dispatch({
 			type: 'SET_MESSAGE_VISIBLE',
 			payload: {
 				message: data.message
@@ -43,12 +27,7 @@ const AddProductPage: React.FC<TContext> = (props): JSX.Element => {
 		});
 	};
 
-	return (
-		<Paper>
-			<Typography variant="h5">Add Product</Typography>
-			<ProductForm onSubmit={submitForm} product={product} />
-		</Paper>
-	);
+	return <ProductForm onSubmit={submitForm} title="Add product" />;
 };
 
-export default withContext(AddProductPage);
+export default AddProductPage;

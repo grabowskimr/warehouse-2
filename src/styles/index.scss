@@ -5,3 +5,11 @@ body {
 	padding: 0px;
 	font-family: Roboto, sans-serif;
 }
+.product-form {
+	.MuiFormControl-root.MuiFormControl-fullWidth {
+		margin-bottom: 10px;
+		&.picture {
+			display: none;
+		}
+	}
+}

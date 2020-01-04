@@ -13,6 +13,7 @@ import AddProductPage from './AddProductPage';
 import Message from './Message';
 import ProductList from './ProductList';
 import Product from './Product';
+import EditProductPage from './EditProductPage';
 
 class Main extends React.Component<RouteComponentProps> {
 	menuItems: TMenuItem[] = [
@@ -36,6 +37,7 @@ class Main extends React.Component<RouteComponentProps> {
 						<Route exact path={appMainPath} component={ProductList} />
 						<Route exact path={`${appMainPath}/product/:id`} component={Product} />
 						<Route path={`${appMainPath}/add`} exact component={AddProductPage} />
+						<Route path={`${appMainPath}/edit/:id`} component={EditProductPage} />
 					</Switch>
 				</Layout>
 				<Message />
