@@ -1,5 +1,6 @@
 import React, { FormEvent, useContext, useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 import ProductForm from './ProductForm';
 import { sendData } from '../actions/dbActions';
@@ -20,12 +21,17 @@ type Props = RouteComponentProps<MatchParams>;
 
 const EditProductPage: React.FC<Props> = (props): JSX.Element => {
 	const { dispatch } = useContext(AppContext);
+	const [cookies] = useCookies();
 	const [product, setProduct] = useState<TProduct>();
 	const submitForm = async (event: FormEvent<HTMLFormElement>, product: TProductForm): Promise<void> => {
 		event.preventDefault();
 		let data = await sendData({
 			...product.product,
 			id: props.match.params.id,
+			user_id: cookies.login.id,
+			product_id: props.match.params.id,
+			type: 'edit',
+			count: product.product.quantity,
 			file: product.file,
 			action: 'updateProduct'
 		});

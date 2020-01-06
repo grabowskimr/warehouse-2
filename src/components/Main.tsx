@@ -14,11 +14,13 @@ import Message from './Message';
 import ProductList from './ProductList';
 import Product from './Product';
 import EditProductPage from './EditProductPage';
+import Order from './Order';
 
 class Main extends React.Component<RouteComponentProps> {
 	menuItems: TMenuItem[] = [
 		{ label: 'Home', url: '/', iconComponent: DashboardIcon },
-		{ label: 'Add product', url: '/add', iconComponent: AddCircleIcon }
+		{ label: 'Add product', url: '/add', iconComponent: AddCircleIcon },
+		{ label: 'Order', url: '/order', iconComponent: AddCircleIcon }
 	];
 
 	componentDidMount(): void {
@@ -38,6 +40,7 @@ class Main extends React.Component<RouteComponentProps> {
 						<Route exact path={`${appMainPath}/product/:id`} component={Product} />
 						<Route path={`${appMainPath}/add`} exact component={AddProductPage} />
 						<Route path={`${appMainPath}/edit/:id`} component={EditProductPage} />
+						<Route path={`${appMainPath}/order`} component={Order} />
 					</Switch>
 				</Layout>
 				<Message />
