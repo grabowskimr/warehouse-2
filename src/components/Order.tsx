@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +8,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { getData } from '../actions/dbActions';
 import { TProduct } from '../types/types';
-import OrderTable from './OrderTable';
+import OrderTable from '../containers/OrderTable';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	paper: {
@@ -36,14 +36,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type Order = {
-	count: number;
-	type: string;
+	count: string;
 } & TProduct;
 
 const Order: React.FC = (): JSX.Element => {
 	const classes = useStyles();
 	const [products, setProducts] = useState<TProduct[]>([]);
-	const [orderList, setOrderList] = useState<TProduct[]>([]);
+	const [orderList, setOrderList] = useState<Order[]>([]);
 	const [order, setOrder] = useState<Order[]>([]);
 	useEffect(() => {
 		const fetchData = async (): Promise<void> => {
@@ -51,7 +50,7 @@ const Order: React.FC = (): JSX.Element => {
 				action: 'getProducts'
 			});
 
-			if (data.status) {
+			if (data.status && !products.length) {
 				setProducts(data.data);
 			}
 		};
@@ -60,12 +59,30 @@ const Order: React.FC = (): JSX.Element => {
 
 	const handleSelect = (event: object, value: any): void => {
 		setOrderList(value);
-		setOrder(value);
+		let values = value.map((value: TProduct): TProduct | Order => {
+			let index = order.findIndex(o => o.id === value.id);
+			if (index >= 0) {
+				return order[index];
+			} else {
+				return value;
+			}
+		});
+
+		setOrder(values);
 	};
 
-	const handleCountChange = (id: string | undefined | number): void => {
-		let orderIndex = order.findIndex(order => (order.id = id));
-		console.log(orderIndex);
+	const handleCountChange = (e: ChangeEvent<HTMLInputElement>, id: string | undefined | number): void => {
+		let list = order.map(product => {
+			if (product.id === id) {
+				product = {
+					...product,
+					count: e.target.value
+				};
+			}
+			return product;
+		});
+
+		setOrder(list);
 	};
 
 	return (
