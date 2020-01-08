@@ -1,14 +1,17 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState, useContext } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Button from '@material-ui/core/Button';
+import { useCookies } from 'react-cookie';
 
-import { getData } from '../actions/dbActions';
+import { getData, sendData } from '../actions/dbActions';
 import { TProduct } from '../types/types';
 import OrderTable from '../containers/OrderTable';
+import { AppContext } from '../AppContext';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	paper: {
@@ -32,6 +35,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 		minWidth: 120,
 		width: '100%',
 		maxWidth: '100%'
+	},
+	submitButton: {
+		marginTop: '20px'
 	}
 }));
 
@@ -44,6 +50,9 @@ const Order: React.FC = (): JSX.Element => {
 	const [products, setProducts] = useState<TProduct[]>([]);
 	const [orderList, setOrderList] = useState<Order[]>([]);
 	const [order, setOrder] = useState<Order[]>([]);
+	const [name, setName] = useState<string>('');
+	const [cookies] = useCookies();
+	const { dispatch } = useContext(AppContext);
 	useEffect(() => {
 		const fetchData = async (): Promise<void> => {
 			let data = await getData({
@@ -81,8 +90,46 @@ const Order: React.FC = (): JSX.Element => {
 			}
 			return product;
 		});
-
 		setOrder(list);
+	};
+
+	const submitOrder = async (): Promise<void> => {
+		let orderProducts = order.map(product => ({
+			productId: product.id,
+			count: product.count,
+			newQ: product.quantity - parseInt(product.count)
+		}));
+		let products = order.map(product => ({
+			...product,
+			productId: product.id,
+			count: product.count,
+			newQuantity: product.quantity - parseInt(product.count)
+		}));
+
+		let { status, message } = await sendData({
+			action: 'createOrder',
+			products: products,
+			orderProducts: JSON.stringify(orderProducts),
+			type: 'order',
+			userId: cookies.login.id,
+			name: name,
+			date: new Date()
+				.toISOString()
+				.slice(0, 19)
+				.replace('T', ' ')
+		});
+		if (status) {
+			dispatch({
+				type: 'SET_MESSAGE_VISIBLE',
+				payload: {
+					message: message
+				}
+			});
+		}
+	};
+
+	const handleNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
+		setName(e.target.value);
 	};
 
 	return (
@@ -92,7 +139,7 @@ const Order: React.FC = (): JSX.Element => {
 					<Paper className={classes.paper}>
 						<form noValidate autoComplete="off">
 							<FormControl className={classes.formControl}>
-								<TextField className={classes.input} label="Order name" />
+								<TextField className={classes.input} label="Order name" value={name} onChange={handleNameChange} />
 							</FormControl>
 							<FormControl className={classes.formControl}>
 								<Autocomplete
@@ -108,6 +155,11 @@ const Order: React.FC = (): JSX.Element => {
 						</form>
 					</Paper>
 					<OrderTable onCountChange={handleCountChange} products={orderList} />
+					<Grid container justify="flex-end">
+						<Button variant="contained" color="primary" className={classes.submitButton} onClick={submitOrder}>
+							Submit
+						</Button>
+					</Grid>
 				</Grid>
 			)}
 		</div>

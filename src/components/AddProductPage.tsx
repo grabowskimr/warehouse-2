@@ -14,7 +14,7 @@ const AddProductPage: React.FC = (props): JSX.Element => {
 	const { dispatch } = useContext(AppContext);
 	const submitForm = async (event: FormEvent<HTMLFormElement>, product: TProductForm): Promise<void> => {
 		event.preventDefault();
-		let data = await sendData({
+		let { message } = await sendData({
 			...product.product,
 			file: product.file,
 			action: 'addProduct'
@@ -22,7 +22,7 @@ const AddProductPage: React.FC = (props): JSX.Element => {
 		dispatch({
 			type: 'SET_MESSAGE_VISIBLE',
 			payload: {
-				message: data.message
+				message: message
 			}
 		});
 	};

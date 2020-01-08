@@ -33,7 +33,8 @@ const EditProductPage: React.FC<Props> = (props): JSX.Element => {
 			type: 'edit',
 			count: product.product.quantity,
 			file: product.file,
-			action: 'updateProduct'
+			action: 'updateProduct',
+			date: new Date()
 		});
 		dispatch({
 			type: 'SET_MESSAGE_VISIBLE',
