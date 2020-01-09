@@ -35,6 +35,9 @@ const EditProductPage: React.FC<Props> = (props): JSX.Element => {
 			file: product.file,
 			action: 'updateProduct',
 			date: new Date()
+				.toISOString()
+				.slice(0, 19)
+				.replace('T', ' ')
 		});
 		dispatch({
 			type: 'SET_MESSAGE_VISIBLE',

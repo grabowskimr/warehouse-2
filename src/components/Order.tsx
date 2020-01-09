@@ -45,7 +45,12 @@ type Order = {
 	count: string;
 } & TProduct;
 
-const Order: React.FC = (): JSX.Element => {
+type Props = {
+	action: string;
+	order?: boolean;
+};
+
+const Order: React.FC<Props> = (props): JSX.Element => {
 	const classes = useStyles();
 	const [products, setProducts] = useState<TProduct[]>([]);
 	const [orderList, setOrderList] = useState<Order[]>([]);
@@ -97,20 +102,20 @@ const Order: React.FC = (): JSX.Element => {
 		let orderProducts = order.map(product => ({
 			productId: product.id,
 			count: product.count,
-			newQ: product.quantity - parseInt(product.count)
+			newQ: props.order ? product.quantity - parseInt(product.count) : product.quantity + parseInt(product.count)
 		}));
 		let products = order.map(product => ({
 			...product,
 			productId: product.id,
 			count: product.count,
-			newQuantity: product.quantity - parseInt(product.count)
+			newQuantity: props.order ? product.quantity - parseInt(product.count) : product.quantity + parseInt(product.count)
 		}));
 
 		let { status, message } = await sendData({
-			action: 'createOrder',
+			action: props.action,
 			products: products,
 			orderProducts: JSON.stringify(orderProducts),
-			type: 'order',
+			type: props.order ? 'order' : 'addition',
 			userId: cookies.login.id,
 			name: name,
 			date: new Date()

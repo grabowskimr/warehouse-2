@@ -60,7 +60,9 @@ const Product: React.FC<Props> = (props): JSX.Element => {
 			{product && (
 				<div>
 					<Grid container spacing={2} className={classes.productTop} justify="space-between">
-						<Grid item>{product.picture ? <img src={`${host}/${product.picture}`} alt="product" /> : <img src="#" alt="product" />}</Grid>
+						<Grid xs={5} item>
+							{product.picture ? <img src={`${host}/${product.picture}`} alt="product" /> : <img src="#" alt="product" />}
+						</Grid>
 						<Grid xs={7} item>
 							<Paper className={classes.paper}>
 								<Grid container justify="flex-end">
