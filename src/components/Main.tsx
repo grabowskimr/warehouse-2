@@ -18,16 +18,19 @@ import EditProductPage from './EditProductPage';
 import OrderPage from '../containers/OrderPage';
 import AdditionPage from '../containers/AdditionPage';
 import AdminPage from '../containers/AdminPage';
+import OrderListPage from '../containers/OrderListPage';
 
 type Props = { cookies: any } & RouteComponentProps;
 
 class Main extends React.Component<Props> {
+	cookie = this.props.cookies.cookies.login ? JSON.parse(this.props.cookies.cookies.login) : null;
 	menuItems: TMenuItem[] = [
 		{ label: 'Home', url: '/', iconComponent: DashboardIcon },
 		{ label: 'Add product', url: '/add', iconComponent: AddCircleIcon },
-		{ label: 'Order', url: '/order', iconComponent: AddCircleIcon },
+		{ label: 'Create order', url: '/order', iconComponent: AddCircleIcon },
 		{ label: 'Addition', url: '/addition', iconComponent: AddCircleIcon },
-		{ label: 'Admin', url: '/admin', iconComponent: AddCircleIcon }
+		{ label: 'Admin', url: '/admin', iconComponent: AddCircleIcon, adminLink: true, isAdmin: this.cookie && this.cookie.profile === 'admin' ? true : false },
+		{ label: 'Orders', url: '/orders', iconComponent: AddCircleIcon }
 	];
 
 	componentDidMount(): void {
@@ -53,7 +56,8 @@ class Main extends React.Component<Props> {
 						<Route path={`${appMainPath}/edit/:id`} component={EditProductPage} />
 						<Route path={`${appMainPath}/order`} component={OrderPage} />
 						<Route path={`${appMainPath}/addition`} component={AdditionPage} />
-						<Route path={`${appMainPath}/admin`} component={AdminPage} />
+						{this.cookie && this.cookie.profile === 'admin' ? <Route path={`${appMainPath}/admin`} component={AdminPage} /> : null}
+						<Route path={`${appMainPath}/orders`} component={OrderListPage} />
 					</Switch>
 				</Layout>
 				<Message />

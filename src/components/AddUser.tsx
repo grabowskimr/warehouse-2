@@ -1,11 +1,18 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, FormEvent, useContext } from 'react';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Md5 } from 'ts-md5/dist/md5';
+
+import { sendData } from '../actions/dbActions';
+import AppContext from '../AppContext';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	paper: {
@@ -23,9 +30,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const AddUser: React.FC = (): JSX.Element => {
+	const { dispatch } = useContext(AppContext);
 	const classes = useStyles();
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
+	const [profile, setProfile] = useState('');
 
 	const handleNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		setName(e.target.value);
@@ -35,7 +44,26 @@ const AddUser: React.FC = (): JSX.Element => {
 		setPassword(e.target.value);
 	};
 
-	const handleSubmit = (): void => {};
+	const handleProfileChange = (e: any): void => {
+		setProfile(e.target.value);
+	};
+
+	const handleSubmit = async (e: FormEvent): Promise<void> => {
+		e.preventDefault();
+		const { message } = await sendData({
+			action: 'addUser',
+			login: name,
+			password: Md5.hashStr(password),
+			profile: profile
+		});
+
+		dispatch({
+			type: 'SET_MESSAGE_VISIBLE',
+			payload: {
+				message: message
+			}
+		});
+	};
 
 	return (
 		<Paper className={classes.paper}>
@@ -45,7 +73,14 @@ const AddUser: React.FC = (): JSX.Element => {
 					<TextField name="name" label="Name" value={name} onChange={handleNameChange} required />
 				</FormControl>
 				<FormControl fullWidth className={classes.formControll}>
-					<TextField name="name" label="Password" value={password} onChange={handlePasswordName} required />
+					<TextField name="name" label="Password" type="password" value={password} onChange={handlePasswordName} required />
+				</FormControl>
+				<FormControl fullWidth>
+					<InputLabel id="profile">Type</InputLabel>
+					<Select labelId="profile" value={profile} name="quantityType" onChange={handleProfileChange} required>
+						<MenuItem value="user">User</MenuItem>
+						<MenuItem value="admin">Admin</MenuItem>
+					</Select>
 				</FormControl>
 				<Grid container justify="flex-end">
 					<Button variant="contained" color="primary" type="submit" className={classes.submitButton}>

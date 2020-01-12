@@ -2,6 +2,8 @@ export type TMenuItem = {
 	label: string;
 	url: string;
 	iconComponent: any;
+	adminLink?: boolean;
+	isAdmin?: boolean;
 };
 
 export type TProduct = {

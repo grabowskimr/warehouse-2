@@ -82,16 +82,20 @@ const SideBar: React.FC<Props> = (props): JSX.Element => {
 			<List>
 				{props.menuItems.map((item, index) => {
 					const Icon = item.iconComponent;
-					return (
-						<Link key={index} to={`${appMainPath}${item.url}`} className={classes.linkItem}>
-							<ListItem button>
-								<ListItemIcon>
-									<Icon />
-								</ListItemIcon>
-								<ListItemText primary={item.label} />
-							</ListItem>
-						</Link>
-					);
+					if ((item.adminLink && item.isAdmin) || !item.adminLink) {
+						return (
+							<Link key={index} to={`${appMainPath}${item.url}`} className={classes.linkItem}>
+								<ListItem button>
+									<ListItemIcon>
+										<Icon />
+									</ListItemIcon>
+									<ListItemText primary={item.label} />
+								</ListItem>
+							</Link>
+						);
+					} else {
+						return null;
+					}
 				})}
 			</List>
 		</Drawer>

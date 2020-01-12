@@ -12,5 +12,5 @@ export const makeId = (length: number): string => {
 export const getCookieValueByRegEx = (cookieName: string): object => {
 	let value: RegExpMatchArray | null = document.cookie.match('(^|;)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
 	let cookie: string = value ? value[value.length - 1] : '{}';
-	return cookie ? JSON.parse(unescape(cookie)) : {};
+	return cookie ? JSON.parse(unescape(cookie)) : null;
 };

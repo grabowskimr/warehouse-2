@@ -9,18 +9,27 @@ const config = {
 	}
 };
 
-export const checkAccess = async (isAdmin?: boolean) => {
+export const checkAccess = async (isAdmin?: boolean): Promise<ReturnedData> => {
 	let cookie: any = getCookieValueByRegEx('login');
-	let secure = await axios.post(
-		api,
-		{
-			action: 'checkAccess',
-			sessionId: cookie.session_id,
-			id: cookie.id,
-			isAdmin: isAdmin ? true : false
-		},
-		config
-	);
+	let secure;
+	if (cookie) {
+		secure = await axios.post(
+			api,
+			{
+				action: 'checkAccess',
+				sessionId: cookie.session_id,
+				id: cookie.id,
+				isAdmin: isAdmin ? true : false
+			},
+			config
+		);
+	} else {
+		secure = {
+			message: 'Logout',
+			data: [],
+			status: false
+		};
+	}
 
 	return secure.data;
 };
@@ -50,7 +59,13 @@ const call: (type: string, data: RequestData, secure: boolean) => Promise<Respon
 				);
 			}
 		} else {
-			return secureInfo;
+			return {
+				data: {
+					message: 'Logout',
+					data: [],
+					status: false
+				}
+			};
 		}
 	} else {
 		return call(
