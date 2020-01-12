@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { withCookies } from 'react-cookie';
 
 import { checkAccess } from '../actions/dbActions';
 import { appMainPath } from '../config/config';
@@ -16,21 +17,29 @@ import Product from './Product';
 import EditProductPage from './EditProductPage';
 import OrderPage from '../containers/OrderPage';
 import AdditionPage from '../containers/AdditionPage';
+import AdminPage from '../containers/AdminPage';
 
-class Main extends React.Component<RouteComponentProps> {
+type Props = { cookies: any } & RouteComponentProps;
+
+class Main extends React.Component<Props> {
 	menuItems: TMenuItem[] = [
 		{ label: 'Home', url: '/', iconComponent: DashboardIcon },
 		{ label: 'Add product', url: '/add', iconComponent: AddCircleIcon },
 		{ label: 'Order', url: '/order', iconComponent: AddCircleIcon },
-		{ label: 'Addition', url: '/addition', iconComponent: AddCircleIcon }
+		{ label: 'Addition', url: '/addition', iconComponent: AddCircleIcon },
+		{ label: 'Admin', url: '/admin', iconComponent: AddCircleIcon }
 	];
 
 	componentDidMount(): void {
-		checkAccess().then(({ status }) => {
-			if (!status) {
-				this.props.history.push('/');
-			}
-		});
+		if (this.props.cookies.cookies.login) {
+			checkAccess().then(({ status }) => {
+				if (!status) {
+					this.props.history.push('/');
+				}
+			});
+		} else {
+			this.props.history.push('/');
+		}
 	}
 
 	render() {
@@ -44,6 +53,7 @@ class Main extends React.Component<RouteComponentProps> {
 						<Route path={`${appMainPath}/edit/:id`} component={EditProductPage} />
 						<Route path={`${appMainPath}/order`} component={OrderPage} />
 						<Route path={`${appMainPath}/addition`} component={AdditionPage} />
+						<Route path={`${appMainPath}/admin`} component={AdminPage} />
 					</Switch>
 				</Layout>
 				<Message />
@@ -52,4 +62,4 @@ class Main extends React.Component<RouteComponentProps> {
 	}
 }
 
-export default Main;
+export default withCookies(Main);

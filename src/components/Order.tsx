@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import { useCookies } from 'react-cookie';
+import Typography from '@material-ui/core/Typography';
 
 import { getData, sendData } from '../actions/dbActions';
 import { TProduct } from '../types/types';
@@ -48,6 +49,7 @@ type Order = {
 type Props = {
 	action: string;
 	order?: boolean;
+	title: string;
 };
 
 const Order: React.FC<Props> = (props): JSX.Element => {
@@ -142,6 +144,7 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 			{products.length && (
 				<Grid>
 					<Paper className={classes.paper}>
+						<Typography variant="h4">{props.title}</Typography>
 						<form noValidate autoComplete="off">
 							<FormControl className={classes.formControl}>
 								<TextField className={classes.input} label="Order name" value={name} onChange={handleNameChange} />
