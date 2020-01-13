@@ -57,7 +57,8 @@ const Login: React.FC<Props> = (props): JSX.Element => {
 					login: user.login,
 					id: user.id,
 					session_id: user.session_id,
-					profile: user.profile
+					profile: user.profile,
+					name: user.name
 				},
 				{ path: '/', expires: oneHour }
 			);

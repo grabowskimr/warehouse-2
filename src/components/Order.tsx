@@ -8,11 +8,14 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import { useCookies } from 'react-cookie';
 import Typography from '@material-ui/core/Typography';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { getData, sendData } from '../actions/dbActions';
 import { TProduct } from '../types/types';
 import OrderTable from '../containers/OrderTable';
 import { AppContext } from '../AppContext';
+import { singleHTMLtoPDF } from '../utils/pdf';
+import { setDate } from '../utils/date';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	paper: {
@@ -39,6 +42,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 	},
 	submitButton: {
 		marginTop: '20px'
+	},
+	printButton: {
+		marginTop: '20px',
+		marginRight: '10px'
 	}
 }));
 
@@ -50,7 +57,7 @@ type Props = {
 	action: string;
 	order?: boolean;
 	title: string;
-};
+} & RouteComponentProps;
 
 const Order: React.FC<Props> = (props): JSX.Element => {
 	const classes = useStyles();
@@ -59,19 +66,28 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 	const [order, setOrder] = useState<Order[]>([]);
 	const [name, setName] = useState<string>('');
 	const [cookies] = useCookies();
+	const [orderDate, setOrderDate] = useState<string>('');
+	const [added, setAdded] = useState<boolean>(false);
 	const { dispatch } = useContext(AppContext);
+	let date = '';
 	useEffect(() => {
 		const fetchData = async (): Promise<void> => {
 			let data = await getData({
 				action: 'getProducts'
 			});
 
-			if (data.status && !products.length) {
-				setProducts(data.data);
-			}
+			setProducts(data.data);
 		};
 		fetchData();
-	});
+
+		return () => {
+			setAdded(false);
+			setName('');
+			setOrder([]);
+			setOrderList([]);
+			setOrderDate('');
+		};
+	}, [products.length]);
 
 	const handleSelect = (event: object, value: any): void => {
 		setOrderList(value);
@@ -101,6 +117,7 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 	};
 
 	const submitOrder = async (): Promise<void> => {
+		date = setDate(new Date());
 		let orderProducts = order.map(product => ({
 			productId: product.id,
 			count: product.count,
@@ -120,12 +137,15 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 			type: props.order ? 'order' : 'addition',
 			userId: cookies.login.id,
 			name: name,
-			date: new Date()
-				.toISOString()
-				.slice(0, 19)
-				.replace('T', ' ')
+			date: date
 		});
 		if (status) {
+			setOrderDate(date);
+			if (props.order) {
+				setAdded(true);
+			} else {
+				props.history.push('/app');
+			}
 			dispatch({
 				type: 'SET_MESSAGE_VISIBLE',
 				payload: {
@@ -137,6 +157,10 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 
 	const handleNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		setName(e.target.value);
+	};
+
+	const downloadPdf = (): void => {
+		singleHTMLtoPDF(name, cookies.login.name, orderDate);
 	};
 
 	return (
@@ -153,6 +177,7 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 								<Autocomplete
 									multiple
 									id="tags-standard"
+									filterSelectedOptions
 									options={products}
 									defaultValue={orderList}
 									getOptionLabel={(option: TProduct) => option.name}
@@ -164,7 +189,12 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 					</Paper>
 					<OrderTable onCountChange={handleCountChange} products={orderList} />
 					<Grid container justify="flex-end">
-						<Button variant="contained" color="primary" className={classes.submitButton} onClick={submitOrder}>
+						{props.order && added && (
+							<Button variant="contained" color="primary" onClick={downloadPdf} className={classes.printButton}>
+								Print report
+							</Button>
+						)}
+						<Button variant="contained" disabled={added} color="primary" className={classes.submitButton} onClick={submitOrder}>
 							Submit
 						</Button>
 					</Grid>

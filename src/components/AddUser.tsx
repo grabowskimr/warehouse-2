@@ -32,9 +32,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 const AddUser: React.FC = (): JSX.Element => {
 	const { dispatch } = useContext(AppContext);
 	const classes = useStyles();
-	const [name, setName] = useState('');
-	const [password, setPassword] = useState('');
-	const [profile, setProfile] = useState('');
+	const [name, setName] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const [profile, setProfile] = useState<string>('');
+	const [login, setLogin] = useState('');
 
 	const handleNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		setName(e.target.value);
@@ -44,24 +45,39 @@ const AddUser: React.FC = (): JSX.Element => {
 		setPassword(e.target.value);
 	};
 
+	const handleLoginChange = (e: ChangeEvent<HTMLInputElement>): void => {
+		setLogin(e.target.value);
+	};
+
 	const handleProfileChange = (e: any): void => {
 		setProfile(e.target.value);
 	};
 
 	const handleSubmit = async (e: FormEvent): Promise<void> => {
 		e.preventDefault();
-		const { message } = await sendData({
+		const { message, status } = await sendData({
 			action: 'addUser',
-			login: name,
+			login: login,
+			name: name,
 			password: Md5.hashStr(password),
 			profile: profile
 		});
+
+		if (status) {
+			setName('');
+			setPassword('');
+			setProfile('');
+		}
 
 		dispatch({
 			type: 'SET_MESSAGE_VISIBLE',
 			payload: {
 				message: message
 			}
+		});
+
+		dispatch({
+			type: 'UPDATE_USERS'
 		});
 	};
 
@@ -70,14 +86,17 @@ const AddUser: React.FC = (): JSX.Element => {
 			<Typography variant="h6">Add User</Typography>
 			<form onSubmit={handleSubmit}>
 				<FormControl fullWidth className={classes.formControll}>
+					<TextField name="login" label="Login" value={login} onChange={handleLoginChange} required />
+				</FormControl>
+				<FormControl fullWidth className={classes.formControll}>
 					<TextField name="name" label="Name" value={name} onChange={handleNameChange} required />
 				</FormControl>
 				<FormControl fullWidth className={classes.formControll}>
-					<TextField name="name" label="Password" type="password" value={password} onChange={handlePasswordName} required />
+					<TextField name="password" label="Password" type="password" value={password} onChange={handlePasswordName} required />
 				</FormControl>
 				<FormControl fullWidth>
 					<InputLabel id="profile">Type</InputLabel>
-					<Select labelId="profile" value={profile} name="quantityType" onChange={handleProfileChange} required>
+					<Select labelId="profile" value={profile} name="profile" onChange={handleProfileChange} required>
 						<MenuItem value="user">User</MenuItem>
 						<MenuItem value="admin">Admin</MenuItem>
 					</Select>

@@ -22,7 +22,7 @@ type Props = {
 const OrderTable: React.FC<Props> = (props): JSX.Element => {
 	return (
 		<TableContainer component={Paper}>
-			<Table aria-label="simple table">
+			<Table aria-label="simple table" id="print">
 				<TableHead>
 					<TableRow>
 						<TableCell>Name</TableCell>

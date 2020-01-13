@@ -4,6 +4,7 @@ interface IApp {
 	drawerOpened: boolean;
 	messageVisible: boolean;
 	message: string;
+	updateUsers: boolean;
 }
 
 type Action = { type: string; payload?: { [dataName: string]: any } };
@@ -11,7 +12,8 @@ type Action = { type: string; payload?: { [dataName: string]: any } };
 export const initialState: IApp = {
 	drawerOpened: true,
 	messageVisible: false,
-	message: ''
+	message: '',
+	updateUsers: false
 };
 
 export const reducer = (state: IApp = initialState, action: Action) => {
@@ -37,6 +39,12 @@ export const reducer = (state: IApp = initialState, action: Action) => {
 				...state,
 				messageVisible: false
 			};
+		case 'UPDATE_USERS': {
+			return {
+				...state,
+				updateUsers: !state.updateUsers
+			};
+		}
 		default:
 			throw new Error();
 	}
