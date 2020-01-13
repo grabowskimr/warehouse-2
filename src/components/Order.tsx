@@ -103,12 +103,13 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 		setOrder(values);
 	};
 
-	const handleCountChange = (e: ChangeEvent<HTMLInputElement>, id: string | undefined | number): void => {
+	const handleCountChange = (e: ChangeEvent<HTMLInputElement>, id: string | undefined | number, valid: boolean): void => {
 		let list = order.map(product => {
 			if (product.id === id) {
 				product = {
 					...product,
-					count: e.target.value
+					count: e.target.value,
+					valid: valid
 				};
 			}
 			return product;
@@ -118,18 +119,33 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 
 	const submitOrder = async (): Promise<void> => {
 		date = setDate(new Date());
-		let orderProducts = order.map(product => ({
-			productId: product.id,
-			count: product.count,
-			newQ: props.order ? product.quantity - parseInt(product.count) : product.quantity + parseInt(product.count),
-			name: product.name
-		}));
+		var validStatus = true;
+		let orderProducts = order.map(product => {
+			//@ts-ignore
+			validStatus = validStatus ? product.valid : validStatus;
+			return {
+				productId: product.id,
+				count: product.count,
+				newQ: props.order ? product.quantity - parseInt(product.count) : product.quantity + parseInt(product.count),
+				name: product.name
+			};
+		});
 		let products = order.map(product => ({
 			...product,
 			productId: product.id,
 			count: product.count,
 			newQuantity: props.order ? product.quantity - parseInt(product.count) : product.quantity + parseInt(product.count)
 		}));
+
+		if (props.order && !validStatus) {
+			dispatch({
+				type: 'SET_MESSAGE_VISIBLE',
+				payload: {
+					message: 'Error'
+				}
+			});
+			return;
+		}
 
 		let { status, message } = await sendData({
 			action: props.action,
@@ -141,6 +157,7 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 			name: name,
 			date: date
 		});
+
 		if (status) {
 			setOrderDate(date);
 			if (props.order) {
@@ -189,7 +206,7 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 							</FormControl>
 						</form>
 					</Paper>
-					<OrderTable onCountChange={handleCountChange} products={orderList} />
+					<OrderTable onCountChange={handleCountChange} products={orderList} isOrder={props.order} />
 					<Grid container justify="flex-end">
 						{props.order && added && (
 							<Button variant="contained" color="primary" onClick={downloadPdf} className={classes.printButton}>

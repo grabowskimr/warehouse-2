@@ -84,7 +84,7 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 	render() {
 		return (
 			<Paper>
-				<Typography variant="h5">{this.props.title}</Typography>
+				<Typography variant="h4">{this.props.title}</Typography>
 				<form onSubmit={e => this.props.onSubmit(e, this.state)} className="product-form">
 					<FormControl fullWidth>
 						<TextField name="name" label="Name" value={this.state.product.name} onChange={this.onInputChange} required />

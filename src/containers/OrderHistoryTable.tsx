@@ -44,13 +44,14 @@ const OrderHistoryTable: React.FC<Props> = ({ records }): JSX.Element => {
 									<TableCell>{row.id}</TableCell>
 									<TableCell>
 										{products.map(product => (
-											<p key={product.productId}>
-												<span> {product.name}:</span>
+											<span key={product.productId}>
+												<span style={{ fontWeight: 500 }}>{product.name}:</span>
 												<br />
 												<span>Order:{product.count}</span>
 												{' / '}
 												<span>New value:{product.newQ}</span>
-											</p>
+												<br />
+											</span>
 										))}
 									</TableCell>
 									<TableCell>{row.user_name}</TableCell>

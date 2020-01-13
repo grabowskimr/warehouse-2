@@ -39,6 +39,7 @@ const EditProductPage: React.FC<Props> = (props): JSX.Element => {
 				.slice(0, 19)
 				.replace('T', ' ')
 		});
+		props.history.push(`/app/product/${props.match.params.id}`);
 		dispatch({
 			type: 'SET_MESSAGE_VISIBLE',
 			payload: {

@@ -16,7 +16,8 @@ type Order = {
 
 type Props = {
 	products: Order[];
-	onCountChange: (e: ChangeEvent<HTMLInputElement>, id: string | undefined | number) => void;
+	onCountChange: (e: ChangeEvent<HTMLInputElement>, id: string | undefined | number, valid: boolean) => void;
+	isOrder: boolean | undefined;
 };
 
 const OrderTable: React.FC<Props> = (props): JSX.Element => {
@@ -34,7 +35,12 @@ const OrderTable: React.FC<Props> = (props): JSX.Element => {
 				</TableHead>
 				<TableBody>
 					{props.products.map(product => (
-						<OrderTableRow key={product.id} product={product} changeCount={(e: ChangeEvent<HTMLInputElement>) => props.onCountChange(e, product.id)} />
+						<OrderTableRow
+							isOrder={props.isOrder}
+							key={product.id}
+							product={product}
+							changeCount={(e: ChangeEvent<HTMLInputElement>, valid) => props.onCountChange(e, product.id, valid)}
+						/>
 					))}
 				</TableBody>
 			</Table>

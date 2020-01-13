@@ -1,8 +1,12 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
-import DashboardIcon from '@material-ui/icons/Dashboard';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import HomeIcon from '@material-ui/icons/Home';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
+import PersonIcon from '@material-ui/icons/Person';
+import NotesIcon from '@material-ui/icons/Notes';
 import { withCookies } from 'react-cookie';
 
 import { checkAccess } from '../actions/dbActions';
@@ -25,12 +29,12 @@ type Props = { cookies: any } & RouteComponentProps;
 class Main extends React.Component<Props> {
 	cookie = this.props.cookies.cookies.login ? JSON.parse(this.props.cookies.cookies.login) : null;
 	menuItems: TMenuItem[] = [
-		{ label: 'Home', url: '/', iconComponent: DashboardIcon },
+		{ label: 'Home', url: '/', iconComponent: HomeIcon },
+		{ label: 'Orders', url: '/orders', iconComponent: NotesIcon },
 		{ label: 'Add product', url: '/add', iconComponent: AddCircleIcon },
-		{ label: 'Create order', url: '/order', iconComponent: AddCircleIcon },
-		{ label: 'Addition', url: '/addition', iconComponent: AddCircleIcon },
-		{ label: 'Admin', url: '/admin', iconComponent: AddCircleIcon, adminLink: true, isAdmin: this.cookie && this.cookie.profile === 'admin' ? true : false },
-		{ label: 'Orders', url: '/orders', iconComponent: AddCircleIcon }
+		{ label: 'Create order', url: '/order', iconComponent: AssignmentIcon },
+		{ label: 'Addition', url: '/addition', iconComponent: LibraryAddIcon },
+		{ label: 'Admin', url: '/admin', iconComponent: PersonIcon, adminLink: true, isAdmin: this.cookie && this.cookie.profile === 'admin' ? true : false }
 	];
 
 	componentDidMount(): void {

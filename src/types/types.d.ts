@@ -16,6 +16,7 @@ export type TProduct = {
 	quantityAlert: number;
 	price: string;
 	picture: string | null;
+	valid?: boolean;
 };
 
 export type TSelect = {

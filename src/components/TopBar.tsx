@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles } from '@material-ui/core/styles';
+import { useCookies } from 'react-cookie';
 
 import { drawerWidth } from '../config/config';
 import AppContext from '../AppContext';
@@ -41,6 +42,8 @@ const useStyles = makeStyles(theme => ({
 const TopBar: React.FC = (props): JSX.Element => {
 	const classes = useStyles();
 	const { state, dispatch } = useContext(AppContext);
+	const [cookies, setCookie, removeCookie] = useCookies(['login']);
+
 	const handleDrawerOpen = (): void => {
 		dispatch({
 			type: 'SET_DRAWER_OPEN',
@@ -51,7 +54,8 @@ const TopBar: React.FC = (props): JSX.Element => {
 	};
 
 	const logoutUser = () => {
-		console.log('logout');
+		removeCookie('login', { path: '/' });
+		window.location.reload();
 	};
 
 	return (

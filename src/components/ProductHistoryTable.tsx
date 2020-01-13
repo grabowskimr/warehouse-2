@@ -6,6 +6,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { TProduct } from '../types/types';
 import { getData } from '../actions/dbActions';
@@ -23,8 +27,24 @@ type THistory = {
 	count: string;
 };
 
+const useStyles = makeStyles((theme: Theme) => ({
+	order: {
+		background: '#F1F8E9',
+		'&:hover': {
+			background: '#AED581'
+		}
+	},
+	addition: {
+		background: '#E3F2FD',
+		'&:hover': {
+			background: '#90CAF9'
+		}
+	}
+}));
+
 const ProductHistoryTable: React.FC<Props> = ({ product }): JSX.Element => {
 	const [history, setHistory] = useState<THistory[]>([]);
+	const classes = useStyles();
 
 	useEffect(() => {
 		const fetchData = async (): Promise<void> => {
@@ -55,9 +75,13 @@ const ProductHistoryTable: React.FC<Props> = ({ product }): JSX.Element => {
 				<TableBody>
 					{history.length
 						? history.map(record => (
-								<TableRow key={record.id}>
+								<TableRow key={record.id} className={record.type === 'order' ? classes.order : record.type === 'addition' ? classes.addition : ''}>
 									<TableCell>{record.date}</TableCell>
-									<TableCell>{record.count}</TableCell>
+									<TableCell>
+										<Grid container alignItems="center">
+											{record.count} {'  '} {record.type === 'order' ? <ArrowDropDownIcon /> : record.type === 'addition' ? <ArrowDropUpIcon /> : null}
+										</Grid>
+									</TableCell>
 									<TableCell>{record.type}</TableCell>
 								</TableRow>
 						  ))

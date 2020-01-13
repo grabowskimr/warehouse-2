@@ -1,6 +1,6 @@
 import React from 'react';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import VerticalAlignBottomIcon from '@material-ui/icons/VerticalAlignBottom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { HTMLtoPDF } from '../utils/pdf';
@@ -21,7 +21,7 @@ const DownloadFabButton: React.FC = (): JSX.Element => {
 
 	return (
 		<Fab color="primary" aria-label="add" onClick={downloadPdf} className={classes.fab}>
-			<AddIcon />
+			<VerticalAlignBottomIcon />
 		</Fab>
 	);
 };

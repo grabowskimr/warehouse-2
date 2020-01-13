@@ -26,6 +26,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 	},
 	productTop: {
 		marginBottom: theme.spacing(4)
+	},
+	noImg: {
+		background: '#f1f1f1',
+		width: '100%',
+		height: '100%'
 	}
 }));
 
@@ -61,7 +66,7 @@ const Product: React.FC<Props> = (props): JSX.Element => {
 				<div>
 					<Grid container spacing={2} className={classes.productTop} justify="space-between">
 						<Grid xs={5} item>
-							{product.picture ? <img src={`${host}/${product.picture}`} alt="product" /> : <img src="#" alt="product" />}
+							{product.picture ? <img src={`${host}/${product.picture}`} alt="product" /> : <div className={classes.noImg}></div>}
 						</Grid>
 						<Grid xs={7} item>
 							<Paper className={classes.paper}>
