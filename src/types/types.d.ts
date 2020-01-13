@@ -28,3 +28,13 @@ export type TFileType = {
 	fileName: string;
 	inputName: string;
 };
+
+export type THistoryRecord = {
+	id: number;
+	name: string;
+	order_products: string;
+	type: string;
+	user_id: number;
+	date: string;
+	user_name: string;
+};

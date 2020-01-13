@@ -123,6 +123,21 @@ const removeDiacritics = (str: string): string => {
 	return str;
 };
 
+export function HTMLtoPDF() {
+	let doc: TPDF = new jsPDF();
+	let table = document.getElementById('print');
+	let tableHTML = table ? table.outerHTML : '';
+	var newTable = removeDiacritics(tableHTML);
+	var htmlObject = document.createElement('div');
+	htmlObject.innerHTML = newTable;
+	var res = doc.autoTableHtmlToJson(htmlObject.querySelector('#print'));
+
+	doc.autoTable(res.columns, res.data, {
+		startY: 10
+	});
+	doc.save('raport.pdf');
+}
+
 export const singleHTMLtoPDF = (name: string, userName: string, date?: string) => {
 	let doc: TPDF = new jsPDF();
 	doc.setFontSize(18);

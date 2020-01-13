@@ -121,7 +121,8 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 		let orderProducts = order.map(product => ({
 			productId: product.id,
 			count: product.count,
-			newQ: props.order ? product.quantity - parseInt(product.count) : product.quantity + parseInt(product.count)
+			newQ: props.order ? product.quantity - parseInt(product.count) : product.quantity + parseInt(product.count),
+			name: product.name
 		}));
 		let products = order.map(product => ({
 			...product,
@@ -136,6 +137,7 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 			orderProducts: JSON.stringify(orderProducts),
 			type: props.order ? 'order' : 'addition',
 			userId: cookies.login.id,
+			userName: cookies.login.name,
 			name: name,
 			date: date
 		});
