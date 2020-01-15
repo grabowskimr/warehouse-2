@@ -75,8 +75,7 @@ const ProductList: React.FC<Props> = (props): JSX.Element => {
 									key={product.id}
 									data-id={product.id}
 									onClick={redirectToEditPage}
-									className={product.quantity > 0 && product.quantity < product.quantityAlert ? classes.alert : product.quantity <= 0 ? classes.noneq : ''}
-								>
+									className={product.quantity > 0 && product.quantity < product.quantityAlert ? classes.alert : product.quantity <= 0 ? classes.noneq : ''}>
 									<TableCell>{product.id}</TableCell>
 									<TableCell>{product.product_index}</TableCell>
 									<TableCell>{product.name}</TableCell>

@@ -19,13 +19,18 @@ type Props = {
 const useStyles = makeStyles((theme: Theme) => ({
 	danger: {
 		background: '#FF8A65'
+	},
+	notVisible: {
+		display: 'none'
 	}
 }));
 
 const OrderTableRow: React.FC<Props> = ({ product, changeCount, isOrder }) => {
 	const classes = useStyles();
 	const [valid, setValid] = useState(true);
+	const [notVisibleCount, setNotVisibleCount] = useState<string>('');
 	const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+		setNotVisibleCount(e.target.value);
 		if (parseInt(e.target.value) > product.quantity && isOrder) {
 			setValid(false);
 			changeCount(e, false);
@@ -46,7 +51,8 @@ const OrderTableRow: React.FC<Props> = ({ product, changeCount, isOrder }) => {
 					<TableCell align="left">{product.price}</TableCell>
 					<TableCell align="left">{product.quantity}</TableCell>
 					<TableCell align="right">
-						<TextField label="Count" type="number" value={product.count} onChange={handleChange} />
+						<span className={classes.notVisible}>{notVisibleCount}</span>
+						<TextField type="number" value={product.count} onChange={handleChange} />
 					</TableCell>
 				</TableRow>
 			)}

@@ -41,7 +41,17 @@ interface MatchParams {
 type Props = RouteComponentProps<MatchParams>;
 
 const Product: React.FC<Props> = (props): JSX.Element => {
-	const [product, setProduct] = useState<TProduct>();
+	const [product, setProduct] = useState<TProduct>({
+		name: '',
+		product_index: '',
+		supplier: 'string',
+		quantity: 0,
+		quantityType: '',
+		quantityAlert: 0,
+		price: '',
+		picture: null,
+		valid: false
+	});
 	const classes = useStyles();
 
 	useEffect(() => {
@@ -56,7 +66,17 @@ const Product: React.FC<Props> = (props): JSX.Element => {
 		};
 		fetchData();
 		return () => {
-			setProduct(undefined);
+			setProduct({
+				name: '',
+				product_index: '',
+				supplier: 'string',
+				quantity: 0,
+				quantityType: '',
+				quantityAlert: 0,
+				price: '',
+				picture: null,
+				valid: false
+			});
 		};
 	}, [props.match.params.id]);
 

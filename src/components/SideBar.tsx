@@ -71,8 +71,7 @@ const SideBar: React.FC<Props> = (props): JSX.Element => {
 			variant="permanent"
 			classes={{
 				paper: clsx(classes.drawerPaper, !state.drawerOpened && classes.drawerPaperClose)
-			}}
-		>
+			}}>
 			<div className={classes.toolbarIcon}>
 				<IconButton onClick={handleDrawerClose}>
 					<ChevronLeftIcon />

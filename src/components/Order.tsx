@@ -117,7 +117,20 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 		setOrder(list);
 	};
 
+	const showAlert = (message: string): void => {
+		dispatch({
+			type: 'SET_MESSAGE_VISIBLE',
+			payload: {
+				message: message
+			}
+		});
+	};
+
 	const submitOrder = async (): Promise<void> => {
+		if (!name.length) {
+			showAlert('Name is required');
+			return;
+		}
 		date = setDate(new Date());
 		var validStatus = true;
 		let orderProducts = order.map(product => {
@@ -138,12 +151,7 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 		}));
 
 		if (props.order && !validStatus) {
-			dispatch({
-				type: 'SET_MESSAGE_VISIBLE',
-				payload: {
-					message: 'Error'
-				}
-			});
+			showAlert('Error');
 			return;
 		}
 
@@ -165,12 +173,7 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 			} else {
 				props.history.push('/app');
 			}
-			dispatch({
-				type: 'SET_MESSAGE_VISIBLE',
-				payload: {
-					message: message
-				}
-			});
+			showAlert(message);
 		}
 	};
 
