@@ -23,6 +23,7 @@ import OrderPage from '../containers/OrderPage';
 import AdditionPage from '../containers/AdditionPage';
 import AdminPage from '../containers/AdminPage';
 import OrderListPage from '../containers/OrderListPage';
+import SingleOrder from '../containers/SingleOrder';
 
 type Props = { cookies: any } & RouteComponentProps;
 
@@ -58,10 +59,11 @@ class Main extends React.Component<Props> {
 						<Route exact path={`${appMainPath}/product/:id`} component={Product} />
 						<Route path={`${appMainPath}/add`} exact component={AddProductPage} />
 						<Route path={`${appMainPath}/edit/:id`} component={EditProductPage} />
-						<Route path={`${appMainPath}/order`} component={OrderPage} />
+						<Route exact path={`${appMainPath}/order`} component={OrderPage} />
 						<Route path={`${appMainPath}/addition`} component={AdditionPage} />
 						{this.cookie && this.cookie.profile === 'admin' ? <Route path={`${appMainPath}/admin`} component={AdminPage} /> : null}
 						<Route path={`${appMainPath}/orders`} component={OrderListPage} />
+						<Route path={`${appMainPath}/order/:id`} component={SingleOrder} />
 					</Switch>
 				</Layout>
 				<Message />

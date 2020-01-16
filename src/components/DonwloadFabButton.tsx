@@ -3,7 +3,7 @@ import Fab from '@material-ui/core/Fab';
 import VerticalAlignBottomIcon from '@material-ui/icons/VerticalAlignBottom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import { HTMLtoPDF } from '../utils/pdf';
+import { HTMLtoPDF, singleHTMLtoPDF } from '../utils/pdf';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	fab: {
@@ -13,10 +13,23 @@ const useStyles = makeStyles((theme: Theme) => ({
 	}
 }));
 
-const DownloadFabButton: React.FC = (): JSX.Element => {
+type Props = {
+	single?: boolean;
+	name?: string;
+	user?: string;
+	date?: string;
+};
+
+const DownloadFabButton: React.FC<Props> = (props): JSX.Element => {
 	const classes = useStyles();
 	const downloadPdf = (): void => {
-		HTMLtoPDF();
+		if (props.single) {
+			let name = props.name || '';
+			let user = props.user || '';
+			singleHTMLtoPDF(name, user, props.date);
+		} else {
+			HTMLtoPDF();
+		}
 	};
 
 	return (

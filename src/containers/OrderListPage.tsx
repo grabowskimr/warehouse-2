@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import { RouteComponentProps } from 'react-router-dom';
 
 import OrderHistoryWeek from '../components/OrderHistoryWeek';
 import OrderHistoryDay from '../components/OrderHistoryDay';
@@ -33,7 +34,7 @@ function TabPanel(props: TabPanelProps) {
 	);
 }
 
-const OrderListPage: React.FC = (): JSX.Element => {
+const OrderListPage: React.FC<RouteComponentProps> = (props): JSX.Element => {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
 
@@ -51,13 +52,13 @@ const OrderListPage: React.FC = (): JSX.Element => {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<OrderHistoryDay />
+				<OrderHistoryDay {...props} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<OrderHistoryWeek />
+				<OrderHistoryWeek {...props} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<OrderHistoryMonth />
+				<OrderHistoryMonth {...props} />
 			</TabPanel>
 		</div>
 	);

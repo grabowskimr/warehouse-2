@@ -4,8 +4,9 @@ import { getData } from '../actions/dbActions';
 import OrderHistoryTable from '../containers/OrderHistoryTable';
 import { THistoryRecord } from '../types/types';
 import DownloadFabButton from './DonwloadFabButton';
+import { RouteComponentProps } from 'react-router-dom';
 
-const OrderHistoryDay: React.FC = (): JSX.Element => {
+const OrderHistoryDay: React.FC<RouteComponentProps> = (props): JSX.Element => {
 	const [history, setHistory] = useState<THistoryRecord[]>([]);
 	const [dataFetched, setDataFetched] = useState(false);
 	useEffect(() => {
@@ -29,7 +30,7 @@ const OrderHistoryDay: React.FC = (): JSX.Element => {
 
 	return (
 		<>
-			{dataFetched && <OrderHistoryTable records={history} />}
+			{dataFetched && <OrderHistoryTable records={history} {...props} />}
 			<DownloadFabButton />
 		</>
 	);

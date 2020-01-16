@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { THistoryRecord } from '../types/types';
 
@@ -17,9 +18,13 @@ type THistoryProduct = {
 
 type Props = {
 	records: THistoryRecord[];
-};
+} & RouteComponentProps;
 
-const OrderHistoryTable: React.FC<Props> = ({ records }): JSX.Element => {
+const OrderHistoryTable: React.FC<Props> = ({ records, history }): JSX.Element => {
+	const goToRecord = (e: MouseEvent<HTMLElement>): void => {
+		history.push(`/app/order/${e.currentTarget.dataset.id}`);
+	};
+
 	return (
 		<TableContainer>
 			{records.length && (
@@ -37,7 +42,7 @@ const OrderHistoryTable: React.FC<Props> = ({ records }): JSX.Element => {
 						{records.map((row: THistoryRecord) => {
 							let products: THistoryProduct[] = JSON.parse(row.order_products);
 							return (
-								<TableRow key={row.id}>
+								<TableRow data-id={row.id} key={row.id} onClick={goToRecord}>
 									<TableCell component="th" scope="row" style={{ fontWeight: 500 }}>
 										{row.name}
 									</TableCell>

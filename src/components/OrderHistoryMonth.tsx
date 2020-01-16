@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { getData } from '../actions/dbActions';
 import OrderHistoryTable from '../containers/OrderHistoryTable';
 import { THistoryRecord } from '../types/types';
 import DownloadFabButton from './DonwloadFabButton';
 
-const OrderHistoryMonth: React.FC = (): JSX.Element => {
+const OrderHistoryMonth: React.FC<RouteComponentProps> = (props): JSX.Element => {
 	const [history, setHistory] = useState<THistoryRecord[]>([]);
 	const [dataFetched, setDataFetched] = useState(false);
 	useEffect(() => {
@@ -29,7 +30,7 @@ const OrderHistoryMonth: React.FC = (): JSX.Element => {
 
 	return (
 		<>
-			{dataFetched && <OrderHistoryTable records={history} />}
+			{dataFetched && <OrderHistoryTable records={history} {...props} />}
 			<DownloadFabButton />
 		</>
 	);
