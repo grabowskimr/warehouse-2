@@ -6,23 +6,25 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { RouteComponentProps } from 'react-router-dom';
+import { makeStyles, Theme } from '@material-ui/core';
 
-import { THistoryRecord } from '../types/types';
-
-type THistoryProduct = {
-	productId: number;
-	count: number;
-	newQ: number;
-	name: string;
-};
+import { THistoryRecord, THistoryProduct } from '../types/types';
+import { appMainPath } from '../config/config';
 
 type Props = {
 	records: THistoryRecord[];
 } & RouteComponentProps;
 
+const useStyles = makeStyles((theme: Theme) => ({
+	row: {
+		cursor: 'pointer'
+	}
+}));
+
 const OrderHistoryTable: React.FC<Props> = ({ records, history }): JSX.Element => {
+	const classes = useStyles();
 	const goToRecord = (e: MouseEvent<HTMLElement>): void => {
-		history.push(`/app/order/${e.currentTarget.dataset.id}`);
+		history.push(`${appMainPath}/report/${e.currentTarget.dataset.id}`);
 	};
 
 	return (
@@ -42,7 +44,7 @@ const OrderHistoryTable: React.FC<Props> = ({ records, history }): JSX.Element =
 						{records.map((row: THistoryRecord) => {
 							let products: THistoryProduct[] = JSON.parse(row.order_products);
 							return (
-								<TableRow data-id={row.id} key={row.id} onClick={goToRecord}>
+								<TableRow hover data-id={row.id} key={row.id} onClick={goToRecord} className={classes.row}>
 									<TableCell component="th" scope="row" style={{ fontWeight: 500 }}>
 										{row.name}
 									</TableCell>
@@ -52,9 +54,13 @@ const OrderHistoryTable: React.FC<Props> = ({ records, history }): JSX.Element =
 											<span key={product.productId}>
 												<span style={{ fontWeight: 500 }}>{product.name}:</span>
 												<br />
-												<span>Order:{product.count}</span>
+												<span>
+													Order:{product.count} {product.quantityType}
+												</span>
 												{' / '}
-												<span>New value:{product.newQ}</span>
+												<span>
+													New value:{product.newQ} {product.quantityType}
+												</span>
 												<br />
 											</span>
 										))}

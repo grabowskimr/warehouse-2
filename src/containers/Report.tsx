@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, MouseEvent } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,11 +14,16 @@ import { useCookies } from 'react-cookie';
 
 import { getData } from '../actions/dbActions';
 import DownloadFabButton from '../components/DonwloadFabButton';
+import { appMainPath } from '../config/config';
+import { THistoryProduct } from '../types/types';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	topPaper: {
 		padding: theme.spacing(2),
 		marginBottom: theme.spacing(3)
+	},
+	row: {
+		cursor: 'pointer'
 	}
 }));
 
@@ -36,22 +41,11 @@ type MatchParams = {
 	id: string;
 };
 
-type THistoryProduct = {
-	productId: number;
-	count: number;
-	newQ: number;
-	name: string;
-	price: string;
-	quantity: number;
-	index: string;
-};
-
 type Props = RouteComponentProps<MatchParams>;
 
-const SingleOrder: React.FC<Props> = (props): JSX.Element => {
+const Report: React.FC<Props> = (props): JSX.Element => {
 	const classes = useStyles();
 	const cookies = useCookies(['login']);
-	console.log(cookies);
 	const [order, setOrder] = useState<TOrder>({
 		id: 0,
 		name: '',
@@ -76,9 +70,13 @@ const SingleOrder: React.FC<Props> = (props): JSX.Element => {
 		fetchData();
 	}, [props.match.params.id]);
 
+	const goToProduct = (e: MouseEvent<HTMLElement>): void => {
+		props.history.push(`${appMainPath}/product/${e.currentTarget.dataset.id}`);
+	};
+
 	return (
 		<>
-			{order.id && (
+			{order && order.id && (
 				<Grid>
 					<Paper className={classes.topPaper}>
 						<Typography variant="h4">Order: {order.name}</Typography>
@@ -98,22 +96,24 @@ const SingleOrder: React.FC<Props> = (props): JSX.Element => {
 							</TableHead>
 							<TableBody>
 								{JSON.parse(order.order_products).map((product: THistoryProduct) => (
-									<TableRow key={product.productId}>
+									<TableRow hover data-id={product.productId} key={product.productId} className={classes.row} onClick={goToProduct}>
 										<TableCell>{product.name}</TableCell>
 										<TableCell>{product.index}</TableCell>
 										<TableCell>{product.price}</TableCell>
 										<TableCell>{product.quantity}</TableCell>
-										<TableCell>{product.count}</TableCell>
+										<TableCell>
+											{product.count} {product.quantityType}
+										</TableCell>
 									</TableRow>
 								))}
 							</TableBody>
 						</Table>
 					</TableContainer>
-					<DownloadFabButton single={true} name={order.name} user={order.user_name} date={order.date} />
+					{order.type === 'order' && <DownloadFabButton single={true} name={order.name} user={order.user_name} date={order.date} />}
 				</Grid>
 			)}
 		</>
 	);
 };
 
-export default SingleOrder;
+export default Report;

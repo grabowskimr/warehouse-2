@@ -33,6 +33,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 	},
 	submitBtn: {
 		marginTop: theme.spacing(2)
+	},
+	error: {
+		width: '100%',
+		textAlign: 'center',
+		color: 'red'
 	}
 }));
 
@@ -40,8 +45,9 @@ type Props = { cookies: any } & RouteComponentProps;
 
 const Login: React.FC<Props> = (props): JSX.Element => {
 	const classes = useStyles();
-	const [login, setLogin] = useState('');
-	const [password, setPassword] = useState('');
+	const [login, setLogin] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const [error, setError] = useState<string>('');
 
 	const loginToApp = async (event: FormEvent): Promise<void> => {
 		event.preventDefault();
@@ -63,6 +69,8 @@ const Login: React.FC<Props> = (props): JSX.Element => {
 				{ path: '/', expires: oneHour }
 			);
 			props.history.push('/app');
+		} else {
+			setError(data.message);
 		}
 	};
 
@@ -81,11 +89,25 @@ const Login: React.FC<Props> = (props): JSX.Element => {
 							Insert credentials
 						</Typography>
 						<form className={classes.form} onSubmit={loginToApp}>
-							<TextField label="Login" fullWidth margin="normal" value={login} onChange={e => setLogin(e.target.value)} />
-							<TextField label="Password" type="password" fullWidth margin="normal" value={password} onChange={e => setPassword(e.target.value)} />
+							<TextField
+								label="Login"
+								fullWidth
+								margin="normal"
+								value={login}
+								onChange={e => setLogin(e.target.value)}
+							/>
+							<TextField
+								label="Password"
+								type="password"
+								fullWidth
+								margin="normal"
+								value={password}
+								onChange={e => setPassword(e.target.value)}
+							/>
 							<Button variant="contained" color="primary" type="submit" className={classes.submitBtn}>
 								Sign In
 							</Button>
+							{error.length ? <p className={classes.error}>{error}</p> : null}
 						</form>
 					</div>
 				</Paper>

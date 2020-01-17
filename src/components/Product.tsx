@@ -120,7 +120,7 @@ const Product: React.FC<Props> = (props): JSX.Element => {
 							</Paper>
 						</Grid>
 					</Grid>
-					<ProductHistoryTable product={product} />
+					<ProductHistoryTable product={product} {...props} />
 				</div>
 			)}
 		</div>

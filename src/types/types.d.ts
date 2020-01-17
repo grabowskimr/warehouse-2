@@ -39,3 +39,14 @@ export type THistoryRecord = {
 	date: string;
 	user_name: string;
 };
+
+export type THistoryProduct = {
+	productId: number;
+	count: number;
+	newQ: number;
+	name: string;
+	price: string;
+	quantity: number;
+	index: string;
+	quantityType: string;
+};

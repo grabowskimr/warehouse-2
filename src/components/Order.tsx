@@ -140,7 +140,11 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 				productId: product.id,
 				count: product.count,
 				newQ: props.order ? product.quantity - parseInt(product.count) : product.quantity + parseInt(product.count),
-				name: product.name
+				name: product.name,
+				price: product.price,
+				quantity: product.quantity,
+				index: product.product_index,
+				quantityType: product.quantityType
 			};
 		});
 		let products = order.map(product => ({

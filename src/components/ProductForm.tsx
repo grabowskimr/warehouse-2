@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { TFileType, TProduct } from '../types/types';
 import FileInput from './FileInput';
 import { host } from '../config/config';
+import withContext from '../utils/withContext';
 
 type TProductState = {
 	product: TProduct;
@@ -22,6 +23,7 @@ type TProductForm = {
 	onSubmit: (event: FormEvent<HTMLFormElement>, product: TProductState) => void;
 	title: string;
 	product?: TProduct;
+	dispatch: () => {};
 };
 
 class ProductForm extends React.Component<TProductForm, TProductState> {
@@ -81,33 +83,85 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 		});
 	};
 
+	submitForm = (e: FormEvent<HTMLFormElement>): void => {
+		e.preventDefault();
+		if (!this.state.product.quantity && !this.state.product.quantityType.length && !this.state.product.quantityAlert) {
+			//@ts-ignore
+			this.props.dispatch({
+				type: 'SET_MESSAGE_VISIBLE',
+				payload: {
+					message: 'Fill all inputs'
+				}
+			});
+		} else {
+			this.props.onSubmit(e, this.state);
+		}
+	};
+
 	render() {
 		return (
 			<Paper>
 				<Typography variant="h4">{this.props.title}</Typography>
-				<form onSubmit={e => this.props.onSubmit(e, this.state)} className="product-form">
+				<form onSubmit={this.submitForm} className="product-form">
 					<FormControl fullWidth>
-						<TextField name="name" label="Name" value={this.state.product.name} onChange={this.onInputChange} required />
+						<TextField
+							name="name"
+							label="Name"
+							value={this.state.product.name}
+							onChange={this.onInputChange}
+							required
+						/>
 					</FormControl>
 					<FormControl fullWidth>
-						<TextField name="product_index" label="Index" value={this.state.product.product_index} onChange={this.onInputChange} required />
+						<TextField
+							name="product_index"
+							label="Index"
+							value={this.state.product.product_index}
+							onChange={this.onInputChange}
+							required
+						/>
 					</FormControl>
 					<FormControl fullWidth>
-						<TextField name="supplier" label="Supplier" value={this.state.product.supplier} onChange={this.onInputChange} required />
+						<TextField
+							name="supplier"
+							label="Supplier"
+							value={this.state.product.supplier}
+							onChange={this.onInputChange}
+							required
+						/>
 					</FormControl>
 					<FormControl fullWidth>
-						<TextField name="price" label="Price" value={this.state.product.price} onChange={this.onInputChange} required />
+						<TextField
+							name="price"
+							label="Price"
+							value={this.state.product.price}
+							onChange={this.onInputChange}
+							required
+						/>
 					</FormControl>
 					<Grid container spacing={2}>
 						<Grid item xs={10}>
 							<FormControl fullWidth>
-								<TextField name="quantity" label="Quantity" value={this.state.product.quantity} onChange={this.onInputChange} required />
+								<TextField
+									type="number"
+									name="quantity"
+									label="Quantity"
+									value={this.state.product.quantity}
+									onChange={this.onInputChange}
+									required
+								/>
 							</FormControl>
 						</Grid>
 						<Grid item xs={2}>
 							<FormControl fullWidth>
 								<InputLabel id="quantity-type">Type</InputLabel>
-								<Select labelId="quantity-type" value={this.state.product.quantityType} name="quantityType" onChange={this.onSelectChange} required>
+								<Select
+									labelId="quantity-type"
+									value={this.state.product.quantityType}
+									name="quantityType"
+									onChange={this.onSelectChange}
+									required
+								>
 									<MenuItem value="kg">Kg</MenuItem>
 									<MenuItem value="liter">Liter</MenuItem>
 									<MenuItem value="pieces">Pieces</MenuItem>
@@ -116,10 +170,22 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 						</Grid>
 					</Grid>
 					<FormControl fullWidth>
-						<TextField name="quantityAlert" label="Alert" type="number" value={this.state.product.quantityAlert} onChange={this.onInputChange} required />
+						<TextField
+							type="number"
+							name="quantityAlert"
+							label="Alert"
+							value={this.state.product.quantityAlert}
+							onChange={this.onInputChange}
+							required
+						/>
 					</FormControl>
 					<FormControl fullWidth>
-						<FileInput label="Picture" name="picture" value={this.state.product.picture} onChange={this.onFileChange} />
+						<FileInput
+							label="Picture"
+							name="picture"
+							value={this.state.product.picture}
+							onChange={this.onFileChange}
+						/>
 					</FormControl>
 					{this.state.product.picture ? <img src={`${host}/${this.state.product.picture}`} alt="zdj" /> : null}
 					<Grid container direction="row" justify="flex-end" alignItems="center">
@@ -133,4 +199,4 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 	}
 }
 
-export default ProductForm;
+export default withContext(ProductForm);
