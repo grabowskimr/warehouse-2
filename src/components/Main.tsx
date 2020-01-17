@@ -7,6 +7,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
 import PersonIcon from '@material-ui/icons/Person';
 import NotesIcon from '@material-ui/icons/Notes';
+import BuildIcon from '@material-ui/icons/Build';
 import { withCookies } from 'react-cookie';
 
 import { checkAccess } from '../actions/dbActions';
@@ -24,6 +25,7 @@ import AdditionPage from '../containers/AdditionPage';
 import AdminPage from '../containers/AdminPage';
 import OrderListPage from '../containers/OrderListPage';
 import Report from '../containers/Report';
+import Services from '../containers/Services';
 
 type Props = { cookies: any } & RouteComponentProps;
 
@@ -35,7 +37,14 @@ class Main extends React.Component<Props> {
 		{ label: 'Add product', url: '/add', iconComponent: AddCircleIcon },
 		{ label: 'Create order', url: '/order', iconComponent: AssignmentIcon },
 		{ label: 'Addition', url: '/addition', iconComponent: LibraryAddIcon },
-		{ label: 'Admin', url: '/admin', iconComponent: PersonIcon, adminLink: true, isAdmin: this.cookie && this.cookie.profile === 'admin' ? true : false }
+		{ label: 'Services', url: '/services', iconComponent: BuildIcon },
+		{
+			label: 'Admin',
+			url: '/admin',
+			iconComponent: PersonIcon,
+			adminLink: true,
+			isAdmin: this.cookie && this.cookie.profile === 'admin' ? true : false
+		}
 	];
 
 	componentDidMount(): void {
@@ -61,9 +70,12 @@ class Main extends React.Component<Props> {
 						<Route path={`${appMainPath}/edit/:id`} component={EditProductPage} />
 						<Route exact path={`${appMainPath}/order`} component={OrderPage} />
 						<Route path={`${appMainPath}/addition`} component={AdditionPage} />
-						{this.cookie && this.cookie.profile === 'admin' ? <Route path={`${appMainPath}/admin`} component={AdminPage} /> : null}
+						{this.cookie && this.cookie.profile === 'admin' ? (
+							<Route path={`${appMainPath}/admin`} component={AdminPage} />
+						) : null}
 						<Route path={`${appMainPath}/orders`} component={OrderListPage} />
 						<Route path={`${appMainPath}/report/:id`} component={Report} />
+						<Route path={`${appMainPath}/services`} component={Services} />
 					</Switch>
 				</Layout>
 				<Message />

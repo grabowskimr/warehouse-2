@@ -242,4 +242,17 @@ if (isset($_GET["action"])) {
         sendMessage('Historia miesiąc', true, $products);
     }
 
+    if($action == 'getOrder') {
+        $sql = "SELECT * FROM w_orders WHERE id = $data->id";
+        $record = callDB($sql, '');
+        sendMessage('Rekord', true, $record);
+    }
+
+    // integration
+    if($action == 'getOpenServices') {
+        $sql = "SELECT * FROM SERVICE WHERE status = 1";
+        $records = callDB($sql, '');
+        sendMessage('Service', true, $records);
+    }
+
 }
