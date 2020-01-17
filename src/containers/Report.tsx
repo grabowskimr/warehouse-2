@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { useCookies } from 'react-cookie';
 
 import { getData } from '../actions/dbActions';
 import DownloadFabButton from '../components/DonwloadFabButton';
@@ -40,12 +41,17 @@ type THistoryProduct = {
 	count: number;
 	newQ: number;
 	name: string;
+	price: string;
+	quantity: number;
+	index: string;
 };
 
 type Props = RouteComponentProps<MatchParams>;
 
 const SingleOrder: React.FC<Props> = (props): JSX.Element => {
 	const classes = useStyles();
+	const cookies = useCookies(['login']);
+	console.log(cookies);
 	const [order, setOrder] = useState<TOrder>({
 		id: 0,
 		name: '',
@@ -61,7 +67,7 @@ const SingleOrder: React.FC<Props> = (props): JSX.Element => {
 				action: 'getOrder',
 				id: props.match.params.id
 			});
-			console.log(JSON.parse(data[0].order_products));
+
 			if (status) {
 				setOrder(data[0]);
 			}
@@ -76,7 +82,8 @@ const SingleOrder: React.FC<Props> = (props): JSX.Element => {
 				<Grid>
 					<Paper className={classes.topPaper}>
 						<Typography variant="h4">Order: {order.name}</Typography>
-						<Typography variant="subtitle1">date: {order.date}</Typography>
+						<Typography variant="subtitle2">date: {order.date}</Typography>
+						{cookies[0].login.profile === 'admin' ? <Typography variant="subtitle1">User: {order.user_name}</Typography> : null}
 					</Paper>
 					<TableContainer component={Paper}>
 						<Table aria-label="history table" id="print">
@@ -93,9 +100,9 @@ const SingleOrder: React.FC<Props> = (props): JSX.Element => {
 								{JSON.parse(order.order_products).map((product: THistoryProduct) => (
 									<TableRow key={product.productId}>
 										<TableCell>{product.name}</TableCell>
-										<TableCell>index</TableCell>
-										<TableCell>price</TableCell>
-										<TableCell>quantity</TableCell>
+										<TableCell>{product.index}</TableCell>
+										<TableCell>{product.price}</TableCell>
+										<TableCell>{product.quantity}</TableCell>
 										<TableCell>{product.count}</TableCell>
 									</TableRow>
 								))}
