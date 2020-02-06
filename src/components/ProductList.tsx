@@ -53,7 +53,8 @@ const ProductList: React.FC<Props> = (props): JSX.Element => {
 				action: 'getProducts'
 			});
 			if (data.status) {
-				setProducts(data.data);
+				let sordedData = sortData(data.data);
+				setProducts(sordedData);
 			}
 		};
 		fetchData();
@@ -61,6 +62,28 @@ const ProductList: React.FC<Props> = (props): JSX.Element => {
 			setProducts([]);
 		};
 	}, []);
+
+	const sortData = (data: TProduct[]): TProduct[] => {
+		let sortedData = data;
+		sortedData.sort((a: TProduct, b: TProduct): any => {
+			let aQ = a.quantity - a.quantityAlert;
+			let bQ = b.quantity - b.quantityAlert;
+			if (a.quantity == 0) {
+				return -1;
+			} else if (b.quantity == 0) {
+				return 1;
+			} else {
+				if (aQ > bQ) {
+					return 1;
+				} else if (aQ < bQ) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}
+		});
+		return sortedData;
+	};
 
 	const redirectToEditPage = (e: any): void => {
 		props.history.push(`${appMainPath}/product/${e.target.parentNode.dataset.id}`);
