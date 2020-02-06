@@ -121,10 +121,10 @@ const EditUser: React.FC = (): JSX.Element => {
 
 	return (
 		<Paper className={classes.paper}>
-			<Typography variant="h6">Edit user</Typography>
+			<Typography variant="h6">Edycja użytkownika</Typography>
 			<form onSubmit={handleEdit}>
 				<FormControl fullWidth className={classes.formControll}>
-					<InputLabel id="user">Type</InputLabel>
+					<InputLabel id="user">Typ</InputLabel>
 					<Select labelId="user" value={user} name="users" onChange={handleUserChange} required>
 						{users.map(user => (
 							<MenuItem key={user.id} value={user.id}>
@@ -135,15 +135,22 @@ const EditUser: React.FC = (): JSX.Element => {
 				</FormControl>
 				{!!user && (
 					<FormControl fullWidth className={classes.formControll}>
-						<TextField name="password" label="Password" type="password" value={password} onChange={handlePasswordName} required />
+						<TextField name="password" label="Hasło" type="password" value={password} onChange={handlePasswordName} required />
 					</FormControl>
 				)}
 				<Grid container justify="flex-end">
-					<Button variant="contained" color="secondary" type="button" disabled={!!!user} onClick={handleRemove} className={classes.removeButton}>
-						Remove
+					<Button
+						variant="contained"
+						color="secondary"
+						type="button"
+						disabled={!!!user}
+						onClick={handleRemove}
+						className={classes.removeButton}
+					>
+						Usuń
 					</Button>
 					<Button variant="contained" color="primary" type="submit" disabled={!!!user} className={classes.submitButton}>
-						Change Password
+						Zmień hasło
 					</Button>
 				</Grid>
 			</form>

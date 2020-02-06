@@ -33,11 +33,11 @@ class Main extends React.Component<Props> {
 	cookie = this.props.cookies.cookies.login ? JSON.parse(this.props.cookies.cookies.login) : null;
 	menuItems: TMenuItem[] = [
 		{ label: 'Home', url: '/', iconComponent: HomeIcon },
-		{ label: 'Orders', url: '/orders', iconComponent: NotesIcon },
-		{ label: 'Add product', url: '/add', iconComponent: AddCircleIcon },
-		{ label: 'Create order', url: '/order', iconComponent: AssignmentIcon },
-		{ label: 'Addition', url: '/addition', iconComponent: LibraryAddIcon },
-		{ label: 'Services', url: '/services', iconComponent: BuildIcon },
+		{ label: 'Raporty', url: '/orders', iconComponent: NotesIcon },
+		{ label: 'Dodaj produkt', url: '/add', iconComponent: AddCircleIcon },
+		{ label: 'Utwórz zamówienie', url: '/order', iconComponent: AssignmentIcon },
+		{ label: 'Dodanie do stanu', url: '/addition', iconComponent: LibraryAddIcon },
+		{ label: 'Serwis', url: '/services', iconComponent: BuildIcon },
 		{
 			label: 'Admin',
 			url: '/admin',
@@ -70,9 +70,7 @@ class Main extends React.Component<Props> {
 						<Route path={`${appMainPath}/edit/:id`} component={EditProductPage} />
 						<Route exact path={`${appMainPath}/order`} component={OrderPage} />
 						<Route path={`${appMainPath}/addition`} component={AdditionPage} />
-						{this.cookie && this.cookie.profile === 'admin' ? (
-							<Route path={`${appMainPath}/admin`} component={AdminPage} />
-						) : null}
+						{this.cookie && this.cookie.profile === 'admin' ? <Route path={`${appMainPath}/admin`} component={AdminPage} /> : null}
 						<Route path={`${appMainPath}/orders`} component={OrderListPage} />
 						<Route path={`${appMainPath}/report/:id`} component={Report} />
 						<Route path={`${appMainPath}/services`} component={Services} />

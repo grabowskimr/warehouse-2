@@ -78,9 +78,9 @@ const ProductHistoryTable: React.FC<Props> = ({ product, history }): JSX.Element
 			<Table aria-label="product history">
 				<TableHead>
 					<TableRow>
-						<TableCell>Date</TableCell>
-						<TableCell>Count</TableCell>
-						<TableCell>Type</TableCell>
+						<TableCell>Data</TableCell>
+						<TableCell>Ilość</TableCell>
+						<TableCell>Typ</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
@@ -91,13 +91,7 @@ const ProductHistoryTable: React.FC<Props> = ({ product, history }): JSX.Element
 									data-id={record.order_id}
 									data-type={record.type}
 									onClick={goToReport}
-									className={
-										record.type === 'order'
-											? classes.order
-											: record.type === 'addition'
-											? classes.addition
-											: ''
-									}
+									className={record.type === 'order' ? classes.order : record.type === 'addition' ? classes.addition : ''}
 								>
 									<TableCell>{record.date}</TableCell>
 									<TableCell>
@@ -110,7 +104,9 @@ const ProductHistoryTable: React.FC<Props> = ({ product, history }): JSX.Element
 											) : null}
 										</Grid>
 									</TableCell>
-									<TableCell>{record.type}</TableCell>
+									<TableCell>
+										{record.type === 'order' ? 'Zamówienie' : record.type === 'addition' ? 'Dodanie' : 'Edycja'}
+									</TableCell>
 								</TableRow>
 						  ))
 						: null}

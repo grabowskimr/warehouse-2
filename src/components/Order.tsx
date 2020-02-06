@@ -127,8 +127,8 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 	};
 
 	const submitOrder = async (): Promise<void> => {
-		if (!name.length) {
-			showAlert('Name is required');
+		if (!name.length && props.order) {
+			showAlert('Nazwa jest wymagana');
 			return;
 		}
 		date = setDate(new Date());
@@ -155,7 +155,7 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 		}));
 
 		if (props.order && !validStatus) {
-			showAlert('Error');
+			showAlert('Błąd');
 			return;
 		}
 
@@ -196,19 +196,30 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 					<Paper className={classes.paper}>
 						<Typography variant="h4">{props.title}</Typography>
 						<form noValidate autoComplete="off">
-							<FormControl className={classes.formControl}>
-								<TextField className={classes.input} label="Order name" value={name} onChange={handleNameChange} />
-							</FormControl>
+							{props.order ? (
+								<FormControl className={classes.formControl}>
+									<TextField
+										className={classes.input}
+										disabled={added}
+										label="Nazwa zamówienia"
+										value={name}
+										onChange={handleNameChange}
+									/>
+								</FormControl>
+							) : null}
 							<FormControl className={classes.formControl}>
 								<Autocomplete
 									multiple
+									disabled={added}
 									id="tags-standard"
 									filterSelectedOptions
 									options={products}
 									defaultValue={orderList}
 									getOptionLabel={(option: TProduct) => option.name}
 									onChange={handleSelect}
-									renderInput={params => <TextField {...params} variant="standard" label="Multiple values" placeholder="Favorites" fullWidth />}
+									renderInput={params => (
+										<TextField {...params} variant="standard" label="Produkty" placeholder="produkty" fullWidth />
+									)}
 								/>
 							</FormControl>
 						</form>
@@ -217,11 +228,11 @@ const Order: React.FC<Props> = (props): JSX.Element => {
 					<Grid container justify="flex-end">
 						{props.order && added && (
 							<Button variant="contained" color="primary" onClick={downloadPdf} className={classes.printButton}>
-								Print report
+								Drukuj raport
 							</Button>
 						)}
 						<Button variant="contained" disabled={added} color="primary" className={classes.submitButton} onClick={submitOrder}>
-							Submit
+							Zatwierdź
 						</Button>
 					</Grid>
 				</Grid>

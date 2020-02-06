@@ -83,27 +83,27 @@ const AddUser: React.FC = (): JSX.Element => {
 
 	return (
 		<Paper className={classes.paper}>
-			<Typography variant="h6">Add User</Typography>
+			<Typography variant="h6">Dodaj użytkownika</Typography>
 			<form onSubmit={handleSubmit}>
 				<FormControl fullWidth className={classes.formControll}>
 					<TextField name="login" label="Login" value={login} onChange={handleLoginChange} required />
 				</FormControl>
 				<FormControl fullWidth className={classes.formControll}>
-					<TextField name="name" label="Name" value={name} onChange={handleNameChange} required />
+					<TextField name="name" label="Imię i nazwisko" value={name} onChange={handleNameChange} required />
 				</FormControl>
 				<FormControl fullWidth className={classes.formControll}>
-					<TextField name="password" label="Password" type="password" value={password} onChange={handlePasswordName} required />
+					<TextField name="password" label="Hasło" type="password" value={password} onChange={handlePasswordName} required />
 				</FormControl>
 				<FormControl fullWidth>
-					<InputLabel id="profile">Type</InputLabel>
+					<InputLabel id="profile">Typ</InputLabel>
 					<Select labelId="profile" value={profile} name="profile" onChange={handleProfileChange} required>
-						<MenuItem value="user">User</MenuItem>
+						<MenuItem value="user">Użytkownik</MenuItem>
 						<MenuItem value="admin">Admin</MenuItem>
 					</Select>
 				</FormControl>
 				<Grid container justify="flex-end">
 					<Button variant="contained" color="primary" type="submit" className={classes.submitButton}>
-						Submit
+						Dodaj
 					</Button>
 				</Grid>
 			</form>

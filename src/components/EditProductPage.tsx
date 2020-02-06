@@ -62,7 +62,7 @@ const EditProductPage: React.FC<Props> = (props): JSX.Element => {
 		};
 	}, [props.match.params.id]);
 
-	return <>{product && product.name ? <ProductForm onSubmit={submitForm} title="Edit product" product={product} /> : null}</>;
+	return <>{product && product.name ? <ProductForm onSubmit={submitForm} title="Edycja produktu" product={product} /> : null}</>;
 };
 
 export default EditProductPage;

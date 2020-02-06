@@ -14,6 +14,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { sendData } from '../actions/dbActions';
 import { makeId } from '../utils/session';
+import Logo from '../static/images/logo.png';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	content: {
@@ -38,6 +39,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 		width: '100%',
 		textAlign: 'center',
 		color: 'red'
+	},
+	logo: {
+		marginBottom: '20px'
 	}
 }));
 
@@ -82,22 +86,19 @@ const Login: React.FC<Props> = (props): JSX.Element => {
 					<Typography variant="h6">Login</Typography>
 				</Toolbar>
 			</AppBar>
-			<Grid container direction="row" justify="center" alignItems="center" className={classes.content}>
+			<Grid container direction="column" justify="center" alignItems="center" className={classes.content}>
+				<div className={classes.logo}>
+					<img src={Logo} alt="copy" />
+				</div>
 				<Paper square={true} className={classes.paper}>
 					<div className={classes.insideContent}>
 						<Typography align="center" variant="h6">
-							Insert credentials
+							Podaj dane
 						</Typography>
 						<form className={classes.form} onSubmit={loginToApp}>
+							<TextField label="Login" fullWidth margin="normal" value={login} onChange={e => setLogin(e.target.value)} />
 							<TextField
-								label="Login"
-								fullWidth
-								margin="normal"
-								value={login}
-								onChange={e => setLogin(e.target.value)}
-							/>
-							<TextField
-								label="Password"
+								label="Hasło"
 								type="password"
 								fullWidth
 								margin="normal"
@@ -105,7 +106,7 @@ const Login: React.FC<Props> = (props): JSX.Element => {
 								onChange={e => setPassword(e.target.value)}
 							/>
 							<Button variant="contained" color="primary" type="submit" className={classes.submitBtn}>
-								Sign In
+								Zaloguj
 							</Button>
 							{error.length ? <p className={classes.error}>{error}</p> : null}
 						</form>

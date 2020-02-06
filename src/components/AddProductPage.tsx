@@ -31,7 +31,7 @@ const AddProductPage: React.FC<RouteComponentProps> = (props): JSX.Element => {
 		});
 	};
 
-	return <ProductForm onSubmit={submitForm} title="Add product" />;
+	return <ProductForm onSubmit={submitForm} title="Dodaj produkt" />;
 };
 
 export default AddProductPage;

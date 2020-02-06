@@ -45,10 +45,18 @@ const OrderListPage: React.FC<RouteComponentProps> = (props): JSX.Element => {
 	return (
 		<div className={classes.root}>
 			<AppBar position="static" color="default">
-				<Tabs value={value} onChange={handleChange} centered indicatorColor="primary" textColor="primary" scrollButtons="auto" aria-label="orders history">
-					<Tab label="Day" id="scroll-tab-1" />
-					<Tab label="Week" id="scroll-tab-2" />
-					<Tab label="Mounth" id="scroll-tab-3" />
+				<Tabs
+					value={value}
+					onChange={handleChange}
+					centered
+					indicatorColor="primary"
+					textColor="primary"
+					scrollButtons="auto"
+					aria-label="orders history"
+				>
+					<Tab label="Dzień" id="scroll-tab-1" />
+					<Tab label="Tydzień" id="scroll-tab-2" />
+					<Tab label="Miesiąć" id="scroll-tab-3" />
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
