@@ -113,7 +113,7 @@ const Product: React.FC<Props> = (props): JSX.Element => {
 								<Typography variant="h5" gutterBottom={true}>
 									{product.quantity} {product.quantityType === 'kg' ? 'kg' : product.quantityType === 'liter' ? 'l' : 'szt.'}
 								</Typography>
-								<Typography variant="h6">Cena:</Typography>
+								<Typography variant="h6">Cena sprzedaży:</Typography>
 								<Typography variant="h5" gutterBottom={true}>
 									{product.price}
 								</Typography>

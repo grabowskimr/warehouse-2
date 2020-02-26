@@ -91,7 +91,10 @@ const uploadFile = async (file: File) => {
 	return data;
 };
 
-export const sendData: (requestData: RequestData, secure?: boolean) => Promise<ReturnedData> = async (requestData: RequestData, secure = true): Promise<ReturnedData> => {
+export const sendData: (requestData: RequestData, secure?: boolean) => Promise<ReturnedData> = async (
+	requestData: RequestData,
+	secure = true
+): Promise<ReturnedData> => {
 	if (requestData.file) {
 		let { path, status } = await uploadFile(requestData.file);
 		if (status) {
@@ -102,12 +105,15 @@ export const sendData: (requestData: RequestData, secure?: boolean) => Promise<R
 	return response;
 };
 
-export const getData: (requestData: RequestData, secure?: boolean) => Promise<ReturnedData> = async (requestData: RequestData, secure = true): Promise<ReturnedData> => {
+export const getData: (requestData: RequestData, secure?: boolean) => Promise<ReturnedData> = async (
+	requestData: RequestData,
+	secure = true
+): Promise<ReturnedData> => {
 	let { data: response }: ResponseObject = await call('get', requestData, secure);
 	response.data = response.data.map((data: { [dataName: string]: any }) => {
 		Object.keys(data).forEach((key: string) => {
 			if (!!Number(data[key])) {
-				data[key] = parseInt(data[key]);
+				data[key] = parseFloat(data[key]);
 			}
 		});
 		return data;

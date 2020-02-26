@@ -89,7 +89,7 @@ const Report: React.FC<Props> = (props): JSX.Element => {
 								<TableRow>
 									<TableCell>Nazwa</TableCell>
 									<TableCell>Index</TableCell>
-									<TableCell>Cena</TableCell>
+									<TableCell>Cena sprzedaży</TableCell>
 									<TableCell>Ilość</TableCell>
 									<TableCell>Zamówienie na</TableCell>
 								</TableRow>

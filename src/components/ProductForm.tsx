@@ -54,10 +54,14 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 
 	onInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		let name: string = e.target.name;
+		let val: string = e.target.value;
+		if (name === 'price') {
+			val = val.replace(',', '.');
+		}
 		this.setState({
 			product: {
 				...this.state.product,
-				[name]: e.target.value
+				[name]: val
 			}
 		});
 	};
@@ -119,7 +123,7 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 						<TextField name="supplier" label="Dostawca" value={this.state.product.supplier} onChange={this.onInputChange} required />
 					</FormControl>
 					<FormControl fullWidth>
-						<TextField name="price" label="Cena" value={this.state.product.price} onChange={this.onInputChange} required />
+						<TextField name="price" label="Cena sprzedaży" value={this.state.product.price} onChange={this.onInputChange} required />
 					</FormControl>
 					<Grid container spacing={2}>
 						<Grid item xs={10}>

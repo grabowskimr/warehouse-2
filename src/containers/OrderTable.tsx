@@ -28,7 +28,7 @@ const OrderTable: React.FC<Props> = (props): JSX.Element => {
 					<TableRow>
 						<TableCell>Nazwa</TableCell>
 						<TableCell align="left">Index</TableCell>
-						<TableCell align="left">Cena</TableCell>
+						<TableCell align="left">Cena sprzedaży</TableCell>
 						<TableCell align="left">Ilość</TableCell>
 						<TableCell align="right">Zamówienie na</TableCell>
 					</TableRow>

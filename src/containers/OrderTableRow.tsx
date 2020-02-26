@@ -51,11 +51,11 @@ const OrderTableRow: React.FC<Props> = ({ product, changeCount, isOrder }) => {
 					<TableCell align="left">{product.product_index}</TableCell>
 					<TableCell align="left">{product.price}</TableCell>
 					<TableCell align="left">
-						{product.quantity} {product.quantityType}
+						{product.quantity} {product.quantityType === 'kg' ? 'kg' : product.quantityType === 'liter' ? 'l' : 'szt.'}
 					</TableCell>
 					<TableCell align="right">
 						<span className={classes.notVisible}>
-							{notVisibleCount} {product.quantityType}
+							{notVisibleCount} {product.quantityType === 'kg' ? 'kg' : product.quantityType === 'liter' ? 'l' : 'szt.'}
 						</span>
 						<Input
 							type="number"
