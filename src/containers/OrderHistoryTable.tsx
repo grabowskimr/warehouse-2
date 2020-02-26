@@ -35,9 +35,9 @@ const OrderHistoryTable: React.FC<Props> = ({ records, history }): JSX.Element =
 						<TableRow>
 							<TableCell>Name</TableCell>
 							<TableCell>Id</TableCell>
-							<TableCell>Products</TableCell>
-							<TableCell>User</TableCell>
-							<TableCell>Date</TableCell>
+							<TableCell>Produkty</TableCell>
+							<TableCell>Użytkownik</TableCell>
+							<TableCell>Data</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -55,11 +55,13 @@ const OrderHistoryTable: React.FC<Props> = ({ records, history }): JSX.Element =
 												<span style={{ fontWeight: 500 }}>{product.name}:</span>
 												<br />
 												<span>
-													Order:{product.count} {product.quantityType}
+													Zamówienie na: {product.count}{' '}
+													{product.quantityType === 'kg' ? 'kg' : product.quantityType === 'liter' ? 'l' : 'szt.'}
 												</span>
 												{' / '}
 												<span>
-													New value:{product.newQ} {product.quantityType}
+													Zostało: {product.newQ}{' '}
+													{product.quantityType === 'kg' ? 'kg' : product.quantityType === 'liter' ? 'l' : 'szt.'}
 												</span>
 												<br />
 											</span>

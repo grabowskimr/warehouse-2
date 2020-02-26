@@ -23,14 +23,14 @@ type Props = {
 const OrderTable: React.FC<Props> = (props): JSX.Element => {
 	return (
 		<TableContainer component={Paper}>
-			<Table aria-label="simple table" id="print">
+			<Table aria-label="table" id="print">
 				<TableHead>
 					<TableRow>
-						<TableCell>Name</TableCell>
+						<TableCell>Nazwa</TableCell>
 						<TableCell align="left">Index</TableCell>
-						<TableCell align="left">Price</TableCell>
-						<TableCell align="left">Quantity</TableCell>
-						<TableCell align="right">Count</TableCell>
+						<TableCell align="left">Cena</TableCell>
+						<TableCell align="left">Ilość</TableCell>
+						<TableCell align="right">Zamówienie na</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>

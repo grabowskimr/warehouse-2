@@ -93,12 +93,12 @@ const Login: React.FC<Props> = (props): JSX.Element => {
 				<Paper square={true} className={classes.paper}>
 					<div className={classes.insideContent}>
 						<Typography align="center" variant="h6">
-							Insert credentials
+							Podaj dane
 						</Typography>
 						<form className={classes.form} onSubmit={loginToApp}>
 							<TextField label="Login" fullWidth margin="normal" value={login} onChange={e => setLogin(e.target.value)} />
 							<TextField
-								label="Password"
+								label="Hasło"
 								type="password"
 								fullWidth
 								margin="normal"
@@ -106,7 +106,7 @@ const Login: React.FC<Props> = (props): JSX.Element => {
 								onChange={e => setPassword(e.target.value)}
 							/>
 							<Button variant="contained" color="primary" type="submit" className={classes.submitBtn}>
-								Sign In
+								Zaloguj
 							</Button>
 							{error.length ? <p className={classes.error}>{error}</p> : null}
 						</form>

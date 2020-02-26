@@ -59,17 +59,17 @@ const Services: React.FC = (): JSX.Element => {
 	return (
 		<>
 			<Typography variant="h4" className={classes.title}>
-				Services
+				Serwis
 			</Typography>
 			<TableContainer component={Paper}>
 				<Table aria-label="history table" id="print">
 					<TableHead>
 						<TableRow>
 							<TableCell>Id</TableCell>
-							<TableCell>Type</TableCell>
-							<TableCell>Date</TableCell>
-							<TableCell>Title</TableCell>
-							<TableCell>Description</TableCell>
+							<TableCell>Typ</TableCell>
+							<TableCell>Data</TableCell>
+							<TableCell>Tytuł</TableCell>
+							<TableCell>Opis</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>

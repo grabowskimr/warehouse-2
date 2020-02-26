@@ -42,7 +42,7 @@ type Props = RouteComponentProps;
 const ProductList: React.FC<Props> = (props): JSX.Element => {
 	const classes = useStyles();
 	let [products, setProducts] = useState<TProduct[]>([]);
-	const tableLabels = ['ID', 'Product Id', 'Name', 'Quantity', 'Suppiler'];
+	const tableLabels = ['ID', 'Id produktu', 'Nazwa', 'Ilość', 'Dostawca'];
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(25);
 	const [filter, setFilter] = useState('');
@@ -108,7 +108,7 @@ const ProductList: React.FC<Props> = (props): JSX.Element => {
 
 	return (
 		<>
-			<TextField fullWidth onChange={search} className={classes.search} label="Search" type="search" variant="outlined" />
+			<TextField fullWidth onChange={search} className={classes.search} label="Szukaj" type="search" variant="outlined" />
 			{products.length && (
 				<TableContainer component={Paper}>
 					<Table className={classes.table}>

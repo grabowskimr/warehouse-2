@@ -92,11 +92,11 @@ const Product: React.FC<Props> = (props): JSX.Element => {
 							<Paper className={classes.paper}>
 								<Grid container justify="flex-end">
 									<Link to={`${appMainPath}/edit/${product.id}`} className={classes.link}>
-										<Button>Edit</Button>
+										<Button>Edytuj</Button>
 									</Link>
 								</Grid>
 								<Typography variant="h6" className={classes.firstLine}>
-									Name:
+									Nazwa:
 								</Typography>
 								<Typography variant="h4" gutterBottom={true}>
 									{product.name}
@@ -105,15 +105,15 @@ const Product: React.FC<Props> = (props): JSX.Element => {
 								<Typography variant="h5" gutterBottom={true}>
 									{product.product_index}
 								</Typography>
-								<Typography variant="h6">Suppiler:</Typography>
+								<Typography variant="h6">Dostawca:</Typography>
 								<Typography variant="h5" gutterBottom={true}>
 									{product.supplier}
 								</Typography>
-								<Typography variant="h6">Quantity:</Typography>
+								<Typography variant="h6">Ilość:</Typography>
 								<Typography variant="h5" gutterBottom={true}>
-									{product.quantity} {product.quantityType}
+									{product.quantity} {product.quantityType === 'kg' ? 'kg' : product.quantityType === 'liter' ? 'l' : 'szt.'}
 								</Typography>
-								<Typography variant="h6">Price:</Typography>
+								<Typography variant="h6">Cena:</Typography>
 								<Typography variant="h5" gutterBottom={true}>
 									{product.price}
 								</Typography>

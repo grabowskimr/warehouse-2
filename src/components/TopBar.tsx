@@ -65,10 +65,10 @@ const TopBar: React.FC = (props): JSX.Element => {
 					<MenuIcon />
 				</IconButton>
 				<Typography variant="h6" className={classes.title}>
-					Warestore
+					Magazyn
 				</Typography>
 				<Button color="inherit" onClick={logoutUser}>
-					Logout
+					Wyloguj
 				</Button>
 			</Toolbar>
 		</AppBar>

@@ -79,19 +79,19 @@ const Report: React.FC<Props> = (props): JSX.Element => {
 			{order && order.id && (
 				<Grid>
 					<Paper className={classes.topPaper}>
-						<Typography variant="h4">Order: {order.name}</Typography>
-						<Typography variant="subtitle2">date: {order.date}</Typography>
-						{cookies[0].login.profile === 'admin' ? <Typography variant="subtitle1">User: {order.user_name}</Typography> : null}
+						<Typography variant="h4">Zamówienie: {order.name}</Typography>
+						<Typography variant="subtitle2">data: {order.date}</Typography>
+						{cookies[0].login.profile === 'admin' ? <Typography variant="subtitle1">Użytkownik: {order.user_name}</Typography> : null}
 					</Paper>
 					<TableContainer component={Paper}>
 						<Table aria-label="history table" id="print">
 							<TableHead>
 								<TableRow>
-									<TableCell>Name</TableCell>
+									<TableCell>Nazwa</TableCell>
 									<TableCell>Index</TableCell>
-									<TableCell>Price</TableCell>
-									<TableCell>Quantity</TableCell>
-									<TableCell>Count</TableCell>
+									<TableCell>Cena</TableCell>
+									<TableCell>Ilość</TableCell>
+									<TableCell>Zamówienie na</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
@@ -102,7 +102,7 @@ const Report: React.FC<Props> = (props): JSX.Element => {
 										<TableCell>{product.price}</TableCell>
 										<TableCell>{product.quantity}</TableCell>
 										<TableCell>
-											{product.count} {product.quantityType}
+											{product.count} {product.quantityType === 'kg' ? 'kg' : product.quantityType === 'liter' ? 'l' : 'szt.'}
 										</TableCell>
 									</TableRow>
 								))}

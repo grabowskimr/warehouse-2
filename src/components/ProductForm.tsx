@@ -90,7 +90,7 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 			this.props.dispatch({
 				type: 'SET_MESSAGE_VISIBLE',
 				payload: {
-					message: 'Fill all inputs'
+					message: 'Wypełnij wszystkie pola'
 				}
 			});
 		} else {
@@ -104,13 +104,7 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 				<Typography variant="h4">{this.props.title}</Typography>
 				<form onSubmit={this.submitForm} className="product-form">
 					<FormControl fullWidth>
-						<TextField
-							name="name"
-							label="Name"
-							value={this.state.product.name}
-							onChange={this.onInputChange}
-							required
-						/>
+						<TextField name="name" label="Nazwa" value={this.state.product.name} onChange={this.onInputChange} required />
 					</FormControl>
 					<FormControl fullWidth>
 						<TextField
@@ -122,22 +116,10 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 						/>
 					</FormControl>
 					<FormControl fullWidth>
-						<TextField
-							name="supplier"
-							label="Supplier"
-							value={this.state.product.supplier}
-							onChange={this.onInputChange}
-							required
-						/>
+						<TextField name="supplier" label="Dostawca" value={this.state.product.supplier} onChange={this.onInputChange} required />
 					</FormControl>
 					<FormControl fullWidth>
-						<TextField
-							name="price"
-							label="Price"
-							value={this.state.product.price}
-							onChange={this.onInputChange}
-							required
-						/>
+						<TextField name="price" label="Cena" value={this.state.product.price} onChange={this.onInputChange} required />
 					</FormControl>
 					<Grid container spacing={2}>
 						<Grid item xs={10}>
@@ -145,7 +127,7 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 								<TextField
 									type="number"
 									name="quantity"
-									label="Quantity"
+									label="Ilość"
 									value={this.state.product.quantity}
 									onChange={this.onInputChange}
 									required
@@ -154,7 +136,7 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 						</Grid>
 						<Grid item xs={2}>
 							<FormControl fullWidth>
-								<InputLabel id="quantity-type">Type</InputLabel>
+								<InputLabel id="quantity-type">Rodzaj</InputLabel>
 								<Select
 									labelId="quantity-type"
 									value={this.state.product.quantityType}
@@ -162,9 +144,9 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 									onChange={this.onSelectChange}
 									required
 								>
-									<MenuItem value="kg">Kg</MenuItem>
-									<MenuItem value="liter">Liter</MenuItem>
-									<MenuItem value="pieces">Pieces</MenuItem>
+									<MenuItem value="kg">Kilogramy</MenuItem>
+									<MenuItem value="liter">Litry</MenuItem>
+									<MenuItem value="pieces">Sztuki</MenuItem>
 								</Select>
 							</FormControl>
 						</Grid>
@@ -180,17 +162,12 @@ class ProductForm extends React.Component<TProductForm, TProductState> {
 						/>
 					</FormControl>
 					<FormControl fullWidth>
-						<FileInput
-							label="Picture"
-							name="picture"
-							value={this.state.product.picture}
-							onChange={this.onFileChange}
-						/>
+						<FileInput label="Zdjęcie" name="picture" value={this.state.product.picture} onChange={this.onFileChange} />
 					</FormControl>
 					{this.state.product.picture ? <img src={`${host}/${this.state.product.picture}`} alt="zdj" /> : null}
 					<Grid container direction="row" justify="flex-end" alignItems="center">
 						<Button type="submit" color="primary" variant="contained">
-							Submit
+							Zapisz
 						</Button>
 					</Grid>
 				</form>

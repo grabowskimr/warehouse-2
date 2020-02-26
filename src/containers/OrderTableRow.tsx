@@ -61,7 +61,11 @@ const OrderTableRow: React.FC<Props> = ({ product, changeCount, isOrder }) => {
 							type="number"
 							value={product.count}
 							onChange={handleChange}
-							endAdornment={<InputAdornment position="end">{product.quantityType}</InputAdornment>}
+							endAdornment={
+								<InputAdornment position="end">
+									{product.quantityType === 'kg' ? 'kg' : product.quantityType === 'liter' ? 'l' : 'szt.'}
+								</InputAdornment>
+							}
 						/>
 					</TableCell>
 				</TableRow>
